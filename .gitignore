@@ -1,6 +1,7 @@
 .idea
+node_modules
 *.bundle.js
-*.logs
+*.log
 dist/**
 dist/app.bundle.js.map
 dist/index.html
