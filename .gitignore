@@ -2,3 +2,6 @@
 node_modules
 *.bundle.js
 *.log
+dist/**
+dist/app.bundle.js.map
+dist/index.html
