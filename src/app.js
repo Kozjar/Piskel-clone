@@ -1,7 +1,13 @@
 import './scss/index.scss';
 
-import React from 'react';
+import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/main_component';
+import Footer from './components/Footer';
+import Main from './components/Main';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+  <Fragment>
+    <Footer/>
+    <Main/>
+  </Fragment>, document.getElementById('root')
+);

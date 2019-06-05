@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 
-class MyComponent extends Component {
+export default class Colors extends Component {
   render() {
     return (
       <div>
-          <h1>My React Appdsdsd!</h1>
+
       </div>
     );
   }
 }
-
-export default MyComponent;
