@@ -7,8 +7,8 @@ export default class FramePreview extends Component {
 
   render() {
     return (
-      <div className="frame-preview">
-        {this.props.number}
+      <div className="frames-bar__frame-preview">
+        <div className="frames-bar__frame-preview-num">{this.props.number}</div>
       </div>
     );
   }

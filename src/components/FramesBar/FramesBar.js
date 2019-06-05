@@ -21,7 +21,7 @@ export default class FramesBar extends Component {
       <div className="frames-bar">
         {this.state.frames.map(frame => <FramePreview key={frame.id}
                         number={frame.number}/>)}
-        <button onClick={this.addNewFrame}>
+        <button className="frames-bar__add-new-frame-btn" onClick={this.addNewFrame}>
           Add New Frame
         </button>
       </div>

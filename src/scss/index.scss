@@ -4,6 +4,10 @@
 @import './Workspace.scss';
 @import './Presets.scss';
 
+* {
+    margin: 0;
+}
+
 main {
     display: flex;
 }
