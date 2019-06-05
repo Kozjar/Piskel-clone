@@ -8,12 +8,12 @@ import RightSideTools from './RightSideTools/RightSideTools';
 export default class Main extends Component {
   render() {
     return (
-      <div>
+      <main>
         <ToolsBar/>
         <FramesBar/>
         <Workspace/>
         <RightSideTools/>
-      </div>
+      </main>
     );
   }
 }
