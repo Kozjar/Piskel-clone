@@ -9,5 +9,5 @@ ReactDOM.render(
   <Fragment>
     <Footer/>
     <Main/>
-  </Fragment>, document.getElementById('root')
+  </Fragment>, document.getElementById('root'),
 );
