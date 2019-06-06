@@ -3,6 +3,11 @@
 @import './ToolsBar.scss';
 @import './Workspace.scss';
 @import './Presets.scss';
+@import './Canvas.scss';
+
+* {
+    margin: 0;
+}
 
 main {
     display: flex;
