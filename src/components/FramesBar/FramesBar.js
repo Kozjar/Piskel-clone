@@ -4,23 +4,42 @@ import FramePreview from './FramePreview';
 export default class FramesBar extends Component {
   constructor(props) {
     super(props);
-    this.state = { frames: [], totalFramesCount: 0 };
+    this.state = { frames: [] };
 
     this.addNewFrame = this.addNewFrame.bind(this);
+    this.deleteFrame = this.deleteFrame.bind(this);
   }
 
   addNewFrame() {
     this.setState((state, props) => ({
-      frames: [...state.frames, { number: state.totalFramesCount, id: state.totalFramesCount }],
-      totalFramesCount: state.totalFramesCount + 1,
+      frames: [...state.frames, { number: state.frames.length, id: state.frames.length }],
     }));
+  }
+
+  deleteFrame(num) {
+    let framesTmp = this.state.frames;
+    framesTmp.splice(num, 1);
+    framesTmp = framesTmp.map((frame) => {
+      if (frame.number > num) {
+        return {
+          number: frame.number - 1,
+          id: frame.id - 1,
+        };
+      }
+      return frame;
+    });
+    console.log(` frame ${num} was deleted`);
+    this.setState({
+      frames: framesTmp,
+    });
   }
 
   render() {
     return (
       <div className="frames-bar">
         {this.state.frames.map(frame => <FramePreview key={frame.id}
-                        number={frame.number}/>)}
+                        number={frame.number}
+                        onDeleteFrame={this.deleteFrame}/>)}
         <button className="frames-bar__add-new-frame-btn" onClick={this.addNewFrame}>
           Add New Frame
         </button>
