@@ -18,8 +18,8 @@ export default class FramesBar extends Component {
 
   deleteFrame(num) {
     let framesTmp = this.state.frames;
-    framesTmp.splice(num, 1);
-    framesTmp = framesTmp.map((frame) => {
+    framesTmp.splice(num, 1); // remove element from page
+    framesTmp = framesTmp.map((frame) => { // reduce frame number by 1 from all frames under target
       if (frame.number > num) {
         return {
           number: frame.number - 1,
