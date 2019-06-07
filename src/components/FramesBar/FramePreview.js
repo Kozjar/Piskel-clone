@@ -19,7 +19,7 @@ export default class FramePreview extends Component {
   render() {
     return (
       <div className="frames-bar__frame-preview">
-        <canvas id={this.canvasId} width="130px" height="130px"></canvas>
+        <canvas id='ca' width="130px" height="130px"></canvas>
         <div className="frames-bar__frame-preview-info">
           <div className="frames-bar__frame-preview-num">{this.props.number}</div>
           <button className="frames-bar__frame-preview-delete-btn" onClick={this.deleteFrame}></button>
