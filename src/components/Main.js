@@ -17,23 +17,31 @@ export default class Main extends Component {
 
   addNewFrame() {
     this.setState((state, props) => ({
-      frames: [...state.frames, { number: state.frames.length, id: state.frames.length }],
+      frames: [...state.frames, {
+        number: state.frames.length,
+        id: state.frames.length,
+        context: document.getElementById('main-canvas').getContext('2d'),
+      }],
     }));
   }
 
   deleteFrame(num) {
     let framesTmp = this.state.frames;
+    console.log(framesTmp);
     framesTmp.splice(num, 1); // remove element from page
+    console.log(framesTmp);
     framesTmp = framesTmp.map((frame) => { // reduce frame number by 1 from all frames under target
       if (frame.number > num) {
         return {
           number: frame.number - 1,
           id: frame.id - 1,
+          context: frame.context,
         };
       }
       return frame;
     });
     console.log(` frame ${num} was deleted`);
+    console.log(framesTmp);
     this.setState({
       frames: framesTmp,
     });
