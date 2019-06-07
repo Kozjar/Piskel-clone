@@ -51,8 +51,6 @@ export default class Canvas extends Component {
     this.context.lineTo(this.mouse.x, this.mouse.y);
     this.context.stroke();
     this.context.closePath();
-    const canvas = document.getElementById('ca');
-    canvas.getContext('2d').drawImage(document.getElementById('main-canvas'), 0, 0, 130, 130);
   }
 
   render() {
