@@ -16,11 +16,11 @@ export default class Canvas extends Component {
 
   componentDidMount() {
     this.canvas = document.getElementById('main-canvas');
-    this.context = this.canvas.getContext('2d');
   }
 
   startDrawing(e) {
     e.persist();
+    this.context = this.canvas.getContext('2d');
     this.mouse.x = e.pageX - this.canvas.offsetLeft;
     this.mouse.y = e.pageY - this.canvas.offsetTop;
     this.draw = true;
@@ -31,6 +31,7 @@ export default class Canvas extends Component {
 
   mouseMove(e) {
     e.persist();
+    this.context = this.canvas.getContext('2d');
     if (this.draw === true) {
       this.mouse.x = e.pageX - this.canvas.offsetLeft;
       this.mouse.y = e.pageY - this.canvas.offsetTop;
@@ -42,6 +43,7 @@ export default class Canvas extends Component {
 
   endDrawing(e) {
     e.persist();
+    this.context = this.canvas.getContext('2d');
     this.mouse.x = e.pageX - this.canvas.offsetLeft;
     this.mouse.y = e.pageY - this.canvas.offsetTop;
     this.draw = false;
