@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 export default class FramePreview extends Component {
   constructor(props) {
@@ -13,8 +13,11 @@ export default class FramePreview extends Component {
   render() {
     return (
       <div className="frames-bar__frame-preview">
-        <div className="frames-bar__frame-preview-num">{this.props.number}</div>
-        <button className="frames-bar__frame-preview-delete-btn" onClick={this.deleteFrame}></button>
+        <canvas width="130px" height="130px"></canvas>
+        <div className="frames-bar__frame-preview-info">
+          <div className="frames-bar__frame-preview-num">{this.props.number}</div>
+          <button className="frames-bar__frame-preview-delete-btn" onClick={this.deleteFrame}></button>
+        </div>
       </div>
     );
   }
