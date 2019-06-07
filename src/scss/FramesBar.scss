@@ -10,6 +10,9 @@
     background-color: $bgCologBlock;
     overflow: auto;
     color: white;
+    .active-frame {
+      border-color: $specialColor;
+    }
     &__frame-preview {
       display: flex;
       justify-content: space-between;

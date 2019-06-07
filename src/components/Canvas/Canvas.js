@@ -51,6 +51,8 @@ export default class Canvas extends Component {
     this.context.lineTo(this.mouse.x, this.mouse.y);
     this.context.stroke();
     this.context.closePath();
+
+    this.props.onUpdateFramePreview();
   }
 
   render() {
