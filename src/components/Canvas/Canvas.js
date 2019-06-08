@@ -4,44 +4,60 @@ import React, { Component } from 'react';
 export default class Canvas extends Component {
   constructor(props) {
     super(props);
-    this.canvas = document.querySelector('main-canvas');
+    this.canvas = undefined;
+    this.context = undefined;
+    this.mouse = { x: 0, y: 0 };
+    this.draw = false;
+
+    this.startDrawing = this.startDrawing.bind(this);
+    this.mouseMove = this.mouseMove.bind(this);
+    this.endDrawing = this.endDrawing.bind(this);
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  drawCanvas() {
-    const canvas = document.querySelector('.main-canvas');
-    const context = canvas.getContext('2d');
+  componentDidMount() {
+    this.canvas = document.getElementById('main-canvas');
+  }
 
-    const mouse = { x: 0, y: 0 };
-    let draw = false;
-    canvas.addEventListener('mousedown', (e) => {
-      mouse.x = e.pageX - canvas.offsetLeft;
-      mouse.y = e.pageY - canvas.offsetTop;
-      draw = true;
-      context.beginPath();
-      context.moveTo(mouse.x, mouse.y);
-    });
-    canvas.addEventListener('mousemove', (e) => {
-      if (draw === true) {
-        mouse.x = e.pageX - canvas.offsetLeft;
-        mouse.y = e.pageY - canvas.offsetTop;
-        context.lineTo(mouse.x, mouse.y);
-        context.stroke();
-      }
-    });
-    canvas.addEventListener('mouseup', (e) => {
-      mouse.x = e.pageX - canvas.offsetLeft;
-      mouse.y = e.pageY - canvas.offsetTop;
-      context.lineTo(mouse.x, mouse.y);
-      context.stroke();
-      context.closePath();
-      draw = false;
-    });
+  startDrawing(e) {
+    e.persist();
+    this.context = this.canvas.getContext('2d');
+    this.mouse.x = e.pageX - this.canvas.offsetLeft;
+    this.mouse.y = e.pageY - this.canvas.offsetTop;
+    this.draw = true;
+
+    this.context.beginPath();
+    this.context.moveTo(this.mouse.x, this.mouse.y);
+  }
+
+  mouseMove(e) {
+    e.persist();
+    this.context = this.canvas.getContext('2d');
+    if (this.draw === true) {
+      this.mouse.x = e.pageX - this.canvas.offsetLeft;
+      this.mouse.y = e.pageY - this.canvas.offsetTop;
+
+      this.context.lineTo(this.mouse.x, this.mouse.y);
+      this.context.stroke();
+    }
+  }
+
+  endDrawing(e) {
+    e.persist();
+    this.context = this.canvas.getContext('2d');
+    this.mouse.x = e.pageX - this.canvas.offsetLeft;
+    this.mouse.y = e.pageY - this.canvas.offsetTop;
+    this.draw = false;
+
+    this.context.lineTo(this.mouse.x, this.mouse.y);
+    this.context.stroke();
+    this.context.closePath();
+
+    this.props.onUpdateFramePreview(); // update active frame preview
   }
 
   render() {
     return (
-      <canvas className="main-canvas" onMouseEnter={this.drawCanvas}>
+      <canvas id="main-canvas" width="500" height="500" onMouseDown={this.startDrawing} onMouseMove={this.mouseMove} onMouseUp={this.endDrawing}>
       </canvas>
     );
   }
