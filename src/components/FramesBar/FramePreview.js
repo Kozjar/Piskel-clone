@@ -3,7 +3,6 @@ import React, { Component, Fragment } from 'react';
 export default class FramePreview extends Component {
   constructor(props) {
     super(props);
-    this.frameId = `frame-preview-${this.props.number}`;
     this.setActiveFrame = this.setActiveFrame.bind(this);
     this.deleteFrame = this.deleteFrame.bind(this);
   }
@@ -25,8 +24,7 @@ export default class FramePreview extends Component {
       backgroundSize: 'contain',
     };
     return (
-      <div id={this.frameId}
-      style={prevStyle}
+      <div style={prevStyle}
       className={`frames-bar__frame-preview ${(this.props.isActive) ? 'active-frame' : ''}`}
       onClick={this.setActiveFrame}>
           <div className="frames-bar__frame-preview-num">{this.props.number}</div>

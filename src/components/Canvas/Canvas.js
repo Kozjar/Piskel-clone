@@ -52,7 +52,7 @@ export default class Canvas extends Component {
     this.context.stroke();
     this.context.closePath();
 
-    this.props.onUpdateFramePreview();
+    this.props.onUpdateFramePreview(); // update active frame preview
   }
 
   render() {
