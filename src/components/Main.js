@@ -9,12 +9,15 @@ import Canvas from './Canvas/Canvas';
 export default class Main extends Component {
   constructor(props) {
     super(props);
-    this.state = { frames: [], activeFrame: undefined };
+    this.state = { frames: [], activeFrame: undefined, proxyFrame: undefined };
 
     this.setActiveFrame = this.setActiveFrame.bind(this);
     this.addNewFrame = this.addNewFrame.bind(this);
     this.deleteFrame = this.deleteFrame.bind(this);
     this.updateFramePreview = this.updateFramePreview.bind(this);
+    this.swapFrames = this.swapFrames.bind(this);
+    this.incrementFramesNum = this.incrementFramesNum.bind(this);
+    this.setProxyFrame = this.setProxyFrame.bind(this);
   }
 
   componentDidMount() {
@@ -56,7 +59,7 @@ export default class Main extends Component {
       }
       //  if we want to delete active frame, update main camvas
       if (this.state.activeFrame === num) {
-        this.setActiveFrame(this.state.activeFrame - 1);
+        this.setActiveFrame(this.state.activeFrame - (this.state.activeFrame) ? 1 : 0);
       }
 
       let framesTmp = this.state.frames;
@@ -74,6 +77,11 @@ export default class Main extends Component {
       this.setState({
         frames: framesTmp,
       });
+    } else {
+      const { frames } = this.state;
+      frames[0].img = undefined;
+      this.setState({ frames });
+      this.setActiveFrame(0);
     }
   }
 
@@ -87,15 +95,46 @@ export default class Main extends Component {
     });
   }
 
+  swapFrames(src, dist) {
+    const { frames } = this.state;
+    const tmpFrame = frames[src];
+    frames[src] = frames[dist];
+    frames[dist] = tmpFrame;
+    this.setState({ frames });
+  }
+
+  incrementFramesNum(start, end, sign) {
+    let { frames } = this.state;
+    frames = frames.map((frame) => {
+      const newNum = (frame.number > start && frame.number < end)
+        ? frame.number + sign : frame.number;
+      return {
+        number: newNum,
+        id: newNum,
+        img: frame.img,
+      };
+    });
+    this.setState({ frames });
+  }
+
+  setProxyFrame(num) {
+    console.log(`new proxy frame – ${num}`);
+    this.setState({ proxyFrame: num });
+  }
+
   render() {
     return (
       <main>
         <ToolsBar />
         <FramesBar onSetActiveFrame={this.setActiveFrame}
                     activeFrame={this.state.activeFrame}
+                    proxyFrame={this.state.proxyFrame}
                     frames={this.state.frames}
                     onAddNewFrame={this.addNewFrame}
-                    onDeleteFrame={this.deleteFrame}/>
+                    onDeleteFrame={this.deleteFrame}
+                    setProxyFrame={this.setProxyFrame}
+                    swapFrames={this.swapFrames}
+                    incrementFramesNum={this.incrementFramesNum}/>
         <Workspace/>
         <RightSideTools />
         <Canvas onUpdateFramePreview={this.updateFramePreview}/>
