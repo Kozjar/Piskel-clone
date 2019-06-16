@@ -1,6 +1,6 @@
 #main-canvas{
-    width: 500px;
-    height: 500px;
+    width: 32px;
+    height: 32px;
     background-color:#eee; 
-    border: 1px solid #ccc;
+    image-rendering: pixelated;
 }
