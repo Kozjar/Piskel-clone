@@ -11,8 +11,12 @@ import * as frameManager from '../managers/FramesManager';
 export default class Main extends Component {
   constructor(props) {
     super(props);
-    this.state = { frames: [], activeFrame: undefined, proxyFrame: undefined };
+    this.state = {
+      frames: [], activeFrame: undefined, proxyFrame: undefined, currentTool: 0,
+    };
 
+    this.setCurrentTool = this.setCurrentTool.bind(this);
+    
     this.setActiveFrame = frameManager.setActiveFrame.bind(this);
     this.addNewFrame = frameManager.addNewFrame.bind(this);
     this.deleteFrame = frameManager.deleteFrame.bind(this);
@@ -25,21 +29,24 @@ export default class Main extends Component {
     this.addNewFrame(); //  add new frame after component was rendered
   }
 
+  setCurrentTool(pickedTool) {
+    this.setState({ currentTool: pickedTool }, () => console.log(this.state.currentTool));
+  }
+
   render() {
     return (
       <main>
-        <ToolsBar />
+        <ToolsBar setCurrentTool={this.setCurrentTool} />
         <FramesBar onSetActiveFrame={this.setActiveFrame}
-                    activeFrame={this.state.activeFrame}
-                    proxyFrame={this.state.proxyFrame}
-                    frames={this.state.frames}
-                    onAddNewFrame={this.addNewFrame}
-                    onDeleteFrame={this.deleteFrame}
-                    setProxyFrame={this.setProxyFrame}
-                    changeFramePos={this.changeFramePos}/>
-        <Workspace/>
+          activeFrame={this.state.activeFrame}
+          proxyFrame={this.state.proxyFrame}
+          frames={this.state.frames}
+          onAddNewFrame={this.addNewFrame}
+          onDeleteFrame={this.deleteFrame}
+          setProxyFrame={this.setProxyFrame}
+        <Workspace />
         <RightSideTools />
-        <Canvas onUpdateFramePreview={this.updateFramePreview}/>
+        <Canvas onUpdateFramePreview={this.updateFramePreview} currentTool={this.state.currentTool} />
       </main>
     );
   }

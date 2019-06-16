@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { Component, Fragment } from 'react';
+import hlPixel from './highlightingPixels';
 
 export default class Canvas extends Component {
   constructor(props) {
@@ -9,10 +10,14 @@ export default class Canvas extends Component {
     this.context = undefined;
     this.mouse = { x: 0, y: 0 };
     this.draw = false;
+    this.lastHlPixel = undefined;
 
     this.startDrawing = this.startDrawing.bind(this);
     this.mouseMove = this.mouseMove.bind(this);
     this.endDrawing = this.endDrawing.bind(this);
+    this.a = this.a.bind(this);
+    this.bindTool = this.bindTool.bind(this);
+    this.pickUpColour = this.pickUpColour.bind(this);
   }
 
   componentDidMount() {
@@ -21,20 +26,15 @@ export default class Canvas extends Component {
     this.context.lineWidth = 3;
   }
 
-  logMousePos() {
-    console.log(`mouse.x = ${this.mouse.x}; mouse.y = ${this.mouse.y}`);
-  }
-
   startDrawing(e) {
     e.persist();
     this.context = this.canvas.getContext('2d');
     this.mouse.x = (e.pageX - this.canvas.offsetLeft) / this.state.scale;
     this.mouse.y = (e.pageY - this.canvas.offsetTop) / this.state.scale;
     this.draw = true;
-    this.logMousePos();
+    this.lastHlPixel = undefined;
 
     this.context.beginPath();
-    // this.context.moveTo(this.mouse.x, this.mouse.y);
     this.a();
   }
 
@@ -44,10 +44,9 @@ export default class Canvas extends Component {
     this.mouse.x = (e.pageX - this.canvas.offsetLeft) / this.state.scale;
     this.mouse.y = (e.pageY - this.canvas.offsetTop) / this.state.scale;
     if (this.draw === true) {
-      this.logMousePos();
       this.a();
-      // this.context.lineTo(this.mouse.x, this.mouse.y);
-      // this.context.stroke();
+    } else {
+      this.lastHlPixel = hlPixel(this.mouse.x, this.mouse.y, this.context, this.lastHlPixel);
     }
   }
 
@@ -57,28 +56,33 @@ export default class Canvas extends Component {
     this.mouse.x = (e.pageX - this.canvas.offsetLeft) / this.state.scale;
     this.mouse.y = (e.pageY - this.canvas.offsetTop) / this.state.scale;
     this.draw = false;
-    this.logMousePos();
-    // this.context.lineTo(this.mouse.x, this.mouse.y);
-    // this.context.stroke();
     this.context.closePath();
-
     this.props.onUpdateFramePreview(); // update active frame preview
+    this.a();
+  }
+
+  a() {
+    const imgData = this.context.createImageData(1, 1);
+    imgData.data[0] = 115;
+    imgData.data[1] = 81;
+    imgData.data[2] = 163;
+    imgData.data[3] = 255;
+    this.context.putImageData(imgData, this.mouse.x, this.mouse.y, 0, 0, 1, 1);
   }
 
   setCanvasScale(n) {
     this.setState({ scale: n });
   }
 
-  a() {
-    const imgData = this.context.createImageData(1, 1);
-    // const index = 4 * (this.mouse.x + this.mouse.y * 500);
-    for (let i = 0; i < imgData.data.length; i += 4) {
-      imgData.data[i + 0] = 0;
-      imgData.data[i + 1] = 0;
-      imgData.data[i + 2] = 0;
-      imgData.data[i + 3] = 255;
-    }
-    this.context.putImageData(imgData, this.mouse.x, this.mouse.y, 0, 0, 1, 1);
+  // it's doesn't work
+  bindTool() {
+    this.canvas.addEventListener('onclick', function () { console.log('click') });
+    this.canvas.addEventListener(onmousemove, () => this.mouseMove);
+    this.canvas.addEventListener(onmouseup, () => this.endDrawing);
+  }
+
+  pickUpColour() {
+    console.log(this.canvas.getContext('2d').getImageData(this.mouse.x, this.mouse.y, 1, 1).data);
   }
 
   render() {
@@ -90,7 +94,7 @@ export default class Canvas extends Component {
     };
     return (
       <div>
-        <canvas style={style} id="main-canvas" width="32" height="32" onMouseDown={this.startDrawing} onMouseMove={this.mouseMove} onMouseUp={this.endDrawing}>
+        <canvas style={style} id="main-canvas" width="32" height="32" onClick={this.pickUpColour} onMouseDown={this.startDrawing} onMouseMove={this.mouseMove} onMouseUp={this.endDrawing}>
         </canvas>
         <button onClick={() => this.setCanvasScale(1)}>scale 1</button>
         <button onClick={() => this.setCanvasScale(0.5)}>scale 0.5</button>
