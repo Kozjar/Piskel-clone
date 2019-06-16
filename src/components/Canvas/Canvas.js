@@ -16,6 +16,8 @@ export default class Canvas extends Component {
     this.mouseMove = this.mouseMove.bind(this);
     this.endDrawing = this.endDrawing.bind(this);
     this.a = this.a.bind(this);
+    this.bindTool = this.bindTool.bind(this);
+    this.pickUpColour = this.pickUpColour.bind(this);
   }
 
   componentDidMount() {
@@ -72,6 +74,17 @@ export default class Canvas extends Component {
     this.setState({ scale: n });
   }
 
+  // it's doesn't work
+  bindTool() {
+    this.canvas.addEventListener('onclick', function () { console.log('click') });
+    this.canvas.addEventListener(onmousemove, () => this.mouseMove);
+    this.canvas.addEventListener(onmouseup, () => this.endDrawing);
+  }
+
+  pickUpColour() {
+    console.log(this.canvas.getContext('2d').getImageData(this.mouse.x, this.mouse.y, 1, 1).data);
+  }
+
   render() {
     const style = {
       transform: `scale(${this.state.scale})`,
@@ -81,7 +94,7 @@ export default class Canvas extends Component {
     };
     return (
       <div>
-        <canvas style={style} id="main-canvas" width="32" height="32" onMouseDown={this.startDrawing} onMouseMove={this.mouseMove} onMouseUp={this.endDrawing}>
+        <canvas style={style} id="main-canvas" width="32" height="32" onClick={this.pickUpColour} onMouseDown={this.startDrawing} onMouseMove={this.mouseMove} onMouseUp={this.endDrawing}>
         </canvas>
         <button onClick={() => this.setCanvasScale(1)}>scale 1</button>
         <button onClick={() => this.setCanvasScale(0.5)}>scale 0.5</button>
