@@ -85,6 +85,7 @@ export default class Canvas extends Component {
     // console.log(imgData);
   }
 
+  // it's doesn't work
   bindTool() {
     this.canvas.addEventListener('onclick', function () { console.log('click') });
     this.canvas.addEventListener(onmousemove, () => this.mouseMove);
