@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { Component, Fragment } from 'react';
+import hlPixel from './highlightingPixels';
 
 export default class Canvas extends Component {
   constructor(props) {
@@ -9,6 +10,7 @@ export default class Canvas extends Component {
     this.context = undefined;
     this.mouse = { x: 0, y: 0 };
     this.draw = false;
+    this.lastHlPixel = undefined;
 
     this.startDrawing = this.startDrawing.bind(this);
     this.mouseMove = this.mouseMove.bind(this);
@@ -22,20 +24,15 @@ export default class Canvas extends Component {
     this.context.lineWidth = 3;
   }
 
-  logMousePos() {
-    console.log(`mouse.x = ${this.mouse.x}; mouse.y = ${this.mouse.y}`);
-  }
-
   startDrawing(e) {
     e.persist();
     this.context = this.canvas.getContext('2d');
     this.mouse.x = (e.pageX - this.canvas.offsetLeft) / this.state.scale;
     this.mouse.y = (e.pageY - this.canvas.offsetTop) / this.state.scale;
     this.draw = true;
-    this.logMousePos();
+    this.lastHlPixel = undefined;
 
     this.context.beginPath();
-    // this.context.moveTo(this.mouse.x, this.mouse.y);
     this.a();
   }
 
@@ -45,10 +42,9 @@ export default class Canvas extends Component {
     this.mouse.x = (e.pageX - this.canvas.offsetLeft) / this.state.scale;
     this.mouse.y = (e.pageY - this.canvas.offsetTop) / this.state.scale;
     if (this.draw === true) {
-      this.logMousePos();
       this.a();
-      // this.context.lineTo(this.mouse.x, this.mouse.y);
-      // this.context.stroke();
+    } else {
+      this.lastHlPixel = hlPixel(this.mouse.x, this.mouse.y, this.context, this.lastHlPixel);
     }
   }
 
@@ -58,40 +54,22 @@ export default class Canvas extends Component {
     this.mouse.x = (e.pageX - this.canvas.offsetLeft) / this.state.scale;
     this.mouse.y = (e.pageY - this.canvas.offsetTop) / this.state.scale;
     this.draw = false;
-    this.logMousePos();
-    // this.context.lineTo(this.mouse.x, this.mouse.y);
-    // this.context.stroke();
     this.context.closePath();
     this.props.onUpdateFramePreview(); // update active frame preview
     this.a();
   }
 
   a() {
-    const imgData = this.context.createImageData(5, 5);
-    // const index = 4 * (this.mouse.x + this.mouse.y * 500);
-    for (let i = 0; i < imgData.data.length; i += 4) {
-      imgData.data[i + 0] = 255;
-      imgData.data[i + 1] = 0;
-      imgData.data[i + 2] = 0;
-      imgData.data[i + 3] = 255;
-    }
-    this.context.putImageData(imgData, this.mouse.x + 5, this.mouse.y + 5, 0, 0, 5, 5);
+    const imgData = this.context.createImageData(1, 1);
+    imgData.data[0] = 115;
+    imgData.data[1] = 81;
+    imgData.data[2] = 163;
+    imgData.data[3] = 255;
+    this.context.putImageData(imgData, this.mouse.x, this.mouse.y, 0, 0, 1, 1);
   }
 
   setCanvasScale(n) {
     this.setState({ scale: n });
-  }
-
-  a() {
-    const imgData = this.context.createImageData(1, 1);
-    // const index = 4 * (this.mouse.x + this.mouse.y * 500);
-    for (let i = 0; i < imgData.data.length; i += 4) {
-      imgData.data[i + 0] = 0;
-      imgData.data[i + 1] = 0;
-      imgData.data[i + 2] = 0;
-      imgData.data[i + 3] = 255;
-    }
-    this.context.putImageData(imgData, this.mouse.x, this.mouse.y, 0, 0, 1, 1);
   }
 
   render() {

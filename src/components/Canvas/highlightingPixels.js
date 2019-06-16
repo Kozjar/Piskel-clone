@@ -48,7 +48,7 @@ function HSVtoRGB(h, s, v) {
 }
 
 function unHighlightPixel(pixel, ctx) {
-  if (pixel.color === undefined) {
+  if (pixel === undefined) {
     return;
   }
   const oldState = ctx.createImageData(1, 1);
@@ -63,13 +63,9 @@ export default function highlightPixel(x, y, ctx, lastHLPixel) {
   unHighlightPixel(lastHLPixel, ctx);
   const pixel = ctx.getImageData(x, y, 1, 1);
   const pixelHsv = RGBtoHSV(pixel.data[0], pixel.data[1], pixel.data[2]);
-  console.log(`HSV = ${pixelHsv.h}, ${pixelHsv.s}, ${pixelHsv.v}`);
   let newRgb = HSVtoRGB(pixelHsv.h, pixelHsv.s, pixelHsv.v);
-  console.log(`RGB = ${newRgb.r}, ${newRgb.g}, ${newRgb.b}`);
-  pixelHsv.v = (pixelHsv.v >= 50) ? pixelHsv.v - 15 : pixelHsv.v + 15;
-  console.log(`HSV after = ${pixelHsv.h}, ${pixelHsv.s}, ${pixelHsv.v}`);
+  pixelHsv.v = (pixelHsv.v >= 50) ? pixelHsv.v - 10 : pixelHsv.v + 10;
   newRgb = HSVtoRGB(pixelHsv.h, pixelHsv.s, pixelHsv.v);
-  console.log(`RGB after = ${newRgb.r}, ${newRgb.g}, ${newRgb.b}`);
   const imgData = ctx.createImageData(1, 1);
   imgData.data[0] = newRgb.r;
   imgData.data[1] = newRgb.g;
