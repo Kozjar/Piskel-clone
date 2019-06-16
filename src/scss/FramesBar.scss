@@ -21,6 +21,8 @@
       margin-left: 20px;
     }
     &__frame-preview {
+      position: relative;
+      image-rendering: pixelated;
       display: flex;
       justify-content: space-between;
       width: 108.3px;

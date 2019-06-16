@@ -4,6 +4,7 @@ export default class FramePreview extends Component {
   constructor(props) {
     super(props);
     this.state = { onDrag: false, elemPos: { y: 0 } };
+    this.onDrag = false;
     this.shift = { y: 0 };
     this.elemId = `preview-frame-${this.props.number}`;
     this.draggedElem = undefined;
@@ -31,32 +32,42 @@ export default class FramePreview extends Component {
       const box = this.draggedElem.getBoundingClientRect();
       this.shift.x = e.pageX - box.left;
       this.shift.y = e.pageY - box.top + 20;
-      this.setState({ elemPos: { y: e.pageY - this.shift.y }, onDrag: true });
-      this.props.setProxyFrame(this.props.number);
+      this.onDrag = true;
+      this.draggedElem.style.position = 'absolute';
+      this.draggedElem.style.zIndex = '100';
+      this.draggedElem.style.top = `${e.pageY - this.shift.y}px`;
+      this.props.setProxyFrame(this.props.number - 1);
     }
   }
 
   moveDrag(e) {
-    if (this.state.onDrag) {
+    if (this.onDrag) {
       e.persist();
       this.draggedElem = e.target;
-      this.setState({ elemPos: { y: e.pageY - this.shift.y } }, () => {
-        document.getElementById(this.elemId).hidden = true;
-      });
-      document.getElementById(this.elemId).hidden = true;
+      this.draggedElem.style.top = `${e.pageY - this.shift.y}px`;
+      this.draggedElem.style.zIndex = '-100';
       const elem = document.elementFromPoint(e.clientX, e.clientY);
-      if (elem.classList.contains('frames-bar__frame-preview') && !this.props.proxyFrame) {
-        console.log(elem.getAttribute('frame-preview-number'));
-        console.log(this.props.proxyFrame);
-        this.props.setProxyFrame(elem.getAttribute('frame-preview-number'));
+      let frameNum = elem.getAttribute('frame-preview-number');
+      if (frameNum !== null) {
+        frameNum = Number(frameNum);
+        if (frameNum === this.props.proxyFrame) this.props.setProxyFrame(frameNum - 1);
+        else this.props.setProxyFrame(frameNum);
       }
-      // this.draggedElem.hidden = false;
+      this.draggedElem.style.zIndex = '100';
     }
   }
 
   endDrag() {
-    this.setState({ onDrag: false });
-    this.props.setProxyFrame(-1);
+    if (this.onDrag) {
+      this.draggedElem.style.zIndex = '';
+      this.onDrag = false;
+      document.getElementById(this.elemId).style.position = '';
+      this.props.setProxyFrame(undefined);
+      document.getElementById(this.elemId).style.top = '';
+      const newPos = (this.props.number > this.props.proxyFrame)
+        ? this.props.proxyFrame + 1 : this.props.proxyFrame;
+      this.props.changeFramePos(this.props.number, newPos);
+    }
   }
 
   render() {
@@ -64,16 +75,12 @@ export default class FramePreview extends Component {
       backgroundColor: 'white',
       backgroundImage: (this.props.img !== undefined) ? `url(${this.props.img})` : '',
       backgroundSize: 'contain',
-      position: this.state.onDrag ? 'absolute' : '',
-      zIndex: this.state.onDrag ? '100' : '',
-      left: this.state.onDrag ? '5px' : '',
-      top: this.state.onDrag ? `${this.state.elemPos.y}px` : '',
     };
     return (
       <Fragment>
+        {(this.props.proxyFrame === -1 && this.props.number === 0) && <div className="proxy-frame"></div>}
         <div style={prevStyle}
               className={`frames-bar__frame-preview ${(this.props.isActive) ? 'active-frame' : ''}`}
-              onClick={this.setActiveFrame}
               frame-preview-number={this.props.number}
               onMouseDown={this.startDrag}
               onMouseMove={this.moveDrag}
@@ -82,7 +89,7 @@ export default class FramePreview extends Component {
             <div className="frames-bar__frame-preview-num">{this.props.number}</div>
             <button className="frames-bar__frame-preview-delete-btn" onClick={this.deleteFrame}></button>
         </div>
-        {this.props.proxyFrame && <div className="proxy-frame"></div>}
+        {(this.props.proxyFrame === this.props.number) && <div className="proxy-frame"></div>}
       </Fragment>
     );
   }
