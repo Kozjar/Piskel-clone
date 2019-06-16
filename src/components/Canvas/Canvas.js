@@ -14,6 +14,8 @@ export default class Canvas extends Component {
     this.mouseMove = this.mouseMove.bind(this);
     this.endDrawing = this.endDrawing.bind(this);
     this.a = this.a.bind(this);
+    this.bindTool = this.bindTool.bind(this);
+    this.pickUpColour = this.pickUpColour.bind(this);
   }
 
   componentDidMount() {
@@ -66,32 +68,31 @@ export default class Canvas extends Component {
     this.a();
   }
 
-  a() {
-    const imgData = this.context.createImageData(5, 5);
-    // const index = 4 * (this.mouse.x + this.mouse.y * 500);
-    for (let i = 0; i < imgData.data.length; i += 4) {
-      imgData.data[i + 0] = 255;
-      imgData.data[i + 1] = 0;
-      imgData.data[i + 2] = 0;
-      imgData.data[i + 3] = 255;
-    }
-    this.context.putImageData(imgData, this.mouse.x + 5, this.mouse.y + 5, 0, 0, 5, 5);
-  }
-
   setCanvasScale(n) {
     this.setState({ scale: n });
   }
 
   a() {
-    const imgData = this.context.createImageData(1, 1);
+    const imgData = this.context.createImageData(2, 2);
     // const index = 4 * (this.mouse.x + this.mouse.y * 500);
     for (let i = 0; i < imgData.data.length; i += 4) {
       imgData.data[i + 0] = 0;
-      imgData.data[i + 1] = 0;
-      imgData.data[i + 2] = 0;
+      imgData.data[i + 1] = 10;
+      imgData.data[i + 2] = 55;
       imgData.data[i + 3] = 255;
     }
-    this.context.putImageData(imgData, this.mouse.x, this.mouse.y, 0, 0, 1, 1);
+    this.context.putImageData(imgData, this.mouse.x, this.mouse.y, 0, 0, 2, 2);
+    // console.log(imgData);
+  }
+
+  bindTool() {
+    this.canvas.addEventListener('onclick', function () { console.log('click') });
+    this.canvas.addEventListener(onmousemove, () => this.mouseMove);
+    this.canvas.addEventListener(onmouseup, () => this.endDrawing);
+  }
+
+  pickUpColour() {
+    console.log(this.canvas.getContext('2d').getImageData(this.mouse.x, this.mouse.y, 1, 1).data);
   }
 
   render() {
@@ -103,7 +104,7 @@ export default class Canvas extends Component {
     };
     return (
       <div>
-        <canvas style={style} id="main-canvas" width="32" height="32" onMouseDown={this.startDrawing} onMouseMove={this.mouseMove} onMouseUp={this.endDrawing}>
+        <canvas style={style} id="main-canvas" width="32" height="32" onClick={this.pickUpColour} onMouseDown={this.startDrawing} onMouseMove={this.mouseMove} onMouseUp={this.endDrawing}>
         </canvas>
         <button onClick={() => this.setCanvasScale(1)}>scale 1</button>
         <button onClick={() => this.setCanvasScale(0.5)}>scale 0.5</button>

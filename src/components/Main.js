@@ -9,7 +9,9 @@ import Canvas from './Canvas/Canvas';
 export default class Main extends Component {
   constructor(props) {
     super(props);
-    this.state = { frames: [], activeFrame: undefined, proxyFrame: undefined };
+    this.state = {
+      frames: [], activeFrame: undefined, proxyFrame: undefined, currentTool: 0,
+    };
 
     this.setActiveFrame = this.setActiveFrame.bind(this);
     this.addNewFrame = this.addNewFrame.bind(this);
@@ -18,6 +20,7 @@ export default class Main extends Component {
     this.swapFrames = this.swapFrames.bind(this);
     this.incrementFramesNum = this.incrementFramesNum.bind(this);
     this.setProxyFrame = this.setProxyFrame.bind(this);
+    this.setCurrentTool = this.setCurrentTool.bind(this);
   }
 
   componentDidMount() {
@@ -122,22 +125,26 @@ export default class Main extends Component {
     this.setState({ proxyFrame: num });
   }
 
+  setCurrentTool(pickedTool) {
+    this.setState({ currentTool: pickedTool }, () => console.log(this.state.currentTool));
+  }
+
   render() {
     return (
       <main>
-        <ToolsBar />
+        <ToolsBar setCurrentTool={this.setCurrentTool} />
         <FramesBar onSetActiveFrame={this.setActiveFrame}
-                    activeFrame={this.state.activeFrame}
-                    proxyFrame={this.state.proxyFrame}
-                    frames={this.state.frames}
-                    onAddNewFrame={this.addNewFrame}
-                    onDeleteFrame={this.deleteFrame}
-                    setProxyFrame={this.setProxyFrame}
-                    swapFrames={this.swapFrames}
-                    incrementFramesNum={this.incrementFramesNum}/>
-        <Workspace/>
+          activeFrame={this.state.activeFrame}
+          proxyFrame={this.state.proxyFrame}
+          frames={this.state.frames}
+          onAddNewFrame={this.addNewFrame}
+          onDeleteFrame={this.deleteFrame}
+          setProxyFrame={this.setProxyFrame}
+          swapFrames={this.swapFrames}
+          incrementFramesNum={this.incrementFramesNum} />
+        <Workspace />
         <RightSideTools />
-        <Canvas onUpdateFramePreview={this.updateFramePreview}/>
+        <Canvas onUpdateFramePreview={this.updateFramePreview} currentTool={this.state.currentTool} />
       </main>
     );
   }
