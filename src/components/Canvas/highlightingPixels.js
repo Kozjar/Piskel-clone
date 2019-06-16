@@ -26,7 +26,7 @@ function RGBtoHSV(red, green, blue) {
 }
 
 function HSVtoRGB(h, s, v) {
-  const hi = Math.round(h / 60);
+  const hi = Math.floor(h / 60);
   let min = (100 - s) * v / 100;
   const a = (v - min) * (h % 60) / 60;
   const inc = Math.round((min + a) * 255 / 100);
@@ -64,10 +64,12 @@ export default function highlightPixel(x, y, ctx, lastHLPixel) {
   const pixel = ctx.getImageData(x, y, 1, 1);
   const pixelHsv = RGBtoHSV(pixel.data[0], pixel.data[1], pixel.data[2]);
   console.log(`HSV = ${pixelHsv.h}, ${pixelHsv.s}, ${pixelHsv.v}`);
+  let newRgb = HSVtoRGB(pixelHsv.h, pixelHsv.s, pixelHsv.v);
+  console.log(`RGB = ${newRgb.r}, ${newRgb.g}, ${newRgb.b}`);
   pixelHsv.v = (pixelHsv.v >= 50) ? pixelHsv.v - 15 : pixelHsv.v + 15;
   console.log(`HSV after = ${pixelHsv.h}, ${pixelHsv.s}, ${pixelHsv.v}`);
-  const newRgb = HSVtoRGB(pixelHsv.h, pixelHsv.s, pixelHsv.v);
-  console.log(`RGB = ${newRgb.r}, ${newRgb.g}, ${newRgb.b}`);
+  newRgb = HSVtoRGB(pixelHsv.h, pixelHsv.s, pixelHsv.v);
+  console.log(`RGB after = ${newRgb.r}, ${newRgb.g}, ${newRgb.b}`);
   const imgData = ctx.createImageData(1, 1);
   imgData.data[0] = newRgb.r;
   imgData.data[1] = newRgb.g;
