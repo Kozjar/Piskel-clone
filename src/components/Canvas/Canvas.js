@@ -89,18 +89,13 @@ export default class Canvas extends Component {
     const style = {
       transform: `scale(${this.state.scale})`,
       transformOrigin: '0 0',
-      marginRight: `${32 * (this.state.scale - 1)}px`,
-      marginBottom: `${32 * (this.state.scale - 1)}px`,
+      // marginRight: `${32 * (this.state.scale - 1)}px`,
+      // marginBottom: `${32 * (this.state.scale - 1)}px`,
     };
     return (
       <div>
         <canvas style={style} id="main-canvas" width="32" height="32" onClick={this.pickUpColour} onMouseDown={this.startDrawing} onMouseMove={this.mouseMove} onMouseUp={this.endDrawing}>
         </canvas>
-        <button onClick={() => this.setCanvasScale(1)}>scale 1</button>
-        <button onClick={() => this.setCanvasScale(0.5)}>scale 0.5</button>
-        <button onClick={() => this.setCanvasScale(2)}>scale 2</button>
-        <button onClick={() => this.setCanvasScale(this.state.scale + 1)}>scale +</button>
-        <button onClick={() => this.setCanvasScale(this.state.scale - 1)}>scale -</button>
       </div>
     );
   }

@@ -70,7 +70,7 @@ export default function highlightPixel(x, y, ctx, lastHLPixel) {
   imgData.data[0] = newRgb.r;
   imgData.data[1] = newRgb.g;
   imgData.data[2] = newRgb.b;
-  imgData.data[3] = pixel.data[3];
+  imgData.data[3] = 255;
   ctx.putImageData(imgData, x, y, 0, 0, 1, 1);
   return {
     x,
