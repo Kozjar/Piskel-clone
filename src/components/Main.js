@@ -44,7 +44,8 @@ export default class Main extends Component {
           onAddNewFrame={this.addNewFrame}
           onDeleteFrame={this.deleteFrame}
           setProxyFrame={this.setProxyFrame}
-        <Workspace />
+          changeFramePos={this.changeFramePos}/>
+        <Workspace/>
         <RightSideTools />
         <Canvas onUpdateFramePreview={this.updateFramePreview} currentTool={this.state.currentTool} />
       </main>
