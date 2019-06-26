@@ -1,3 +1,5 @@
+@import './Presets.scss';
+
 .tools-bar{
     color: azure;
     img{
@@ -14,6 +16,9 @@
         width: 50px;
         height: 50px;
         border: 1px solid wheat;
-        background-color: black;
+        background-color: rgb(115, 81, 163);
+    }
+    .activeTool {
+        border: 3px solid $specialColor;
     }
 }
