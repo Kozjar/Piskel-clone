@@ -85,13 +85,13 @@ export default class Canvas extends Component {
       <Fragment>
         <div id="main-canvas-container">
           <canvas style={style} id="main-canvas" width="32" height="32"
-                  onMouseDown={this.onMouseDown.bind(this)}
-                  onMouseMove={this.onMouseMove.bind(this)}
-                  onMouseUp={this.onMouseUp.bind(this)}>
+            onMouseDown={this.onMouseDown.bind(this)}
+            onMouseMove={this.onMouseMove.bind(this)}
+            onMouseUp={this.onMouseUp.bind(this)}>
           </canvas>
           {/* <canvas style={style} id="drawing-canvas" width="32" height="32"></canvas> */}
         </div>
-        <div className="mouse-stats">PrevX: {this.state.mousePrev.x}; PrevY: {this.state.mousePrev.y}<br/>x: {this.state.mouse.x}; y: {this.state.mouse.y}</div>
+        <div className="mouse-stats">PrevX: {this.state.mousePrev.x}; PrevY: {this.state.mousePrev.y}<br />x: {this.state.mouse.x}; y: {this.state.mouse.y}</div>
       </Fragment>
     );
   }

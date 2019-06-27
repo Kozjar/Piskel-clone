@@ -22,9 +22,9 @@ export default class Main extends Component {
       activeFrame: undefined,
       proxyFrame: undefined,
 
-      mouseUpContainer: () => {},
-      mouseMoveContainer: () => {},
-      mouseDownContainer: () => {},
+      mouseUpContainer: () => { },
+      mouseMoveContainer: () => { },
+      mouseDownContainer: () => { },
       activeToolId: 0,
     };
 
@@ -79,8 +79,8 @@ export default class Main extends Component {
           onAddNewFrame={this.addNewFrame}
           onDeleteFrame={this.deleteFrame}
           setProxyFrame={this.setProxyFrame}
-          changeFramePos={this.changeFramePos}/>
-        <Workspace/>
+          changeFramePos={this.changeFramePos} />
+        <Workspace />
         <RightSideTools />
         <Canvas onUpdateFramePreview={this.updateFramePreview}
           onMouseDown={this.state.mouseDownContainer}
