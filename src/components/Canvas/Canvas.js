@@ -106,7 +106,6 @@ export default class Canvas extends Component {
                   onMouseLeave={this.onMouseLeave.bind(this)}>
           </canvas>
         </div>
-        /* Element which shows current and last mouse position */
         <div className="mouse-stats">PrevX: {this.state.mousePrev.x}; PrevY: {this.state.mousePrev.y}<br />x: {this.state.mouse.x}; y: {this.state.mouse.y}</div>
       </Fragment>
     );
