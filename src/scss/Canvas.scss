@@ -4,6 +4,8 @@
     height: 32px;
     background-color:#eee;
     image-rendering: pixelated;
+    background-image: url('https://cs10.pikabu.ru/post_img/big/2018/12/24/1/1545608157198144185.jpg');
+    background-size: contain;
 }
 
 #drawing-canvas {
@@ -15,4 +17,9 @@
     top: 800px;
     left: 1000px;
     color: white;
+}
+#gachiBass {
+    margin-left: 700px;
+    width: 200px;
+    height: 200px;
 }

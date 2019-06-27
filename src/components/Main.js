@@ -22,9 +22,9 @@ export default class Main extends Component {
       activeFrame: undefined,
       proxyFrame: undefined,
 
-      mouseUpContainer: () => {},
-      mouseMoveContainer: () => {},
-      mouseDownContainer: () => {},
+      mouseUpContainer: () => { },
+      mouseMoveContainer: () => { },
+      mouseDownContainer: () => { },
       activeToolId: 0,
     };
 
@@ -79,13 +79,14 @@ export default class Main extends Component {
           onAddNewFrame={this.addNewFrame}
           onDeleteFrame={this.deleteFrame}
           setProxyFrame={this.setProxyFrame}
-          changeFramePos={this.changeFramePos}/>
-        <Workspace/>
+          changeFramePos={this.changeFramePos} />
+        <Workspace />
         <RightSideTools />
         <Canvas onUpdateFramePreview={this.updateFramePreview}
           onMouseDown={this.state.mouseDownContainer}
           onMouseMove={this.state.mouseMoveContainer}
           onMouseUp={this.state.mouseUpContainer} />
+        <img id="gachiBass" src="https://media1.tenor.com/images/4583240c2924d46ee4a865fd2ae3f348/tenor.gif?itemid=14354854" alt="" />
       </main>
     );
   }
