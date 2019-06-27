@@ -16,10 +16,9 @@ export default class Canvas extends Component {
     };
     this.canvas = undefined;
     this.context = undefined;
+    this.drawingCanvas = undefined;
     this.mouse = { x: 0, y: 0 };
     this.draw = false;
-    this.lastHlPixel = undefined;
-    this.startDrawing = null;
 
     this.R = 115;
     this.G = 81;
@@ -28,9 +27,7 @@ export default class Canvas extends Component {
 
   componentDidMount() {
     this.canvas = document.getElementById('main-canvas');
-    this.context = this.canvas.getContext('2d');
-    console.log(this.context);
-    // this.context.lineWidth = 3;
+    this.drawingCanvas = document.getElementById('drawing-canvas');
   }
 
   setCanvasScale(n) {
@@ -38,7 +35,8 @@ export default class Canvas extends Component {
   }
 
   onMouseDown(e) {
-    this.lastHlPixel = undefined;
+    this.context = this.drawingCanvas.getContext('2d');
+    hlPixel(-1, -1);
     this.props.onMouseDown.bind(this, e)();
   }
 
@@ -60,20 +58,31 @@ export default class Canvas extends Component {
           y: newCoord.y,
         },
       }), () => {
-        this.context = this.canvas.getContext('2d');
+        this.context = this.drawingCanvas.getContext('2d');
         if (this.draw) {
           this.props.onMouseMove.bind(this, e)();
         } else {
-          this.lastHlPixel = hlPixel(this.state.mouse.x, this.state.mouse.y, this.context, this.lastHlPixel);
+          hlPixel(this.state.mouse.x, this.state.mouse.y);
         }
       });
     }
   }
 
   onMouseUp(e) {
-    this.context = this.canvas.getContext('2d');
+    this.context = this.drawingCanvas.getContext('2d');
     this.props.onMouseUp.bind(this, e)();
-    this.props.onUpdateFramePreview(); // update active frame preview
+    hlPixel(this.state.mouse.x, this.state.mouse.y);
+    this.props.onUpdateFramePreview(this.canvas.width, this.canvas.height); // update active frame preview
+  }
+
+  onMouseLeave() {
+    const endDraw = () => {
+      this.draw = false;
+      this.props.onUpdateFramePreview(this.canvas.width, this.canvas.height); // update active frame preview
+      document.body.removeEventListener('mouseup', endDraw);
+    };
+    document.body.addEventListener('mouseup', endDraw.bind(this));
+    hlPixel(-1, -1);
   }
 
   render() {
@@ -84,12 +93,13 @@ export default class Canvas extends Component {
     return (
       <Fragment>
         <div id="main-canvas-container">
-          <canvas style={style} id="main-canvas" width="32" height="32"
-            onMouseDown={this.onMouseDown.bind(this)}
-            onMouseMove={this.onMouseMove.bind(this)}
-            onMouseUp={this.onMouseUp.bind(this)}>
+          <canvas style={style} className="canvas" id="main-canvas" width="32" height="32"></canvas>
+          <canvas style={style} className="canvas" id="drawing-canvas" width="32" height="32"
+                  onMouseDown={this.onMouseDown.bind(this)}
+                  onMouseMove={this.onMouseMove.bind(this)}
+                  onMouseUp={this.onMouseUp.bind(this)}
+                  onMouseLeave={this.onMouseLeave.bind(this)}>
           </canvas>
-          {/* <canvas style={style} id="drawing-canvas" width="32" height="32"></canvas> */}
         </div>
         <div className="mouse-stats">PrevX: {this.state.mousePrev.x}; PrevY: {this.state.mousePrev.y}<br />x: {this.state.mouse.x}; y: {this.state.mouse.y}</div>
       </Fragment>

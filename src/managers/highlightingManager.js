@@ -47,31 +47,23 @@ function HSVtoRGB(h, s, v) {
   }
 }
 
-function unHighlightPixel(pixel, ctx) {
-  if (pixel === undefined) {
-    return;
-  }
-  const oldState = ctx.createImageData(1, 1);
-  oldState.data[0] = pixel.color[0];
-  oldState.data[1] = pixel.color[1];
-  oldState.data[2] = pixel.color[2];
-  oldState.data[3] = pixel.color[3];
-  ctx.putImageData(oldState, pixel.x, pixel.y);
-}
+export default function highlightPixel(x, y) {
+  const canvas = document.getElementById('main-canvas');
+  const ctxSorce = canvas.getContext('2d');
+  const ctxDraw = document.getElementById('drawing-canvas').getContext('2d');
 
-export default function highlightPixel(x, y, ctx, lastHLPixel) {
-  unHighlightPixel(lastHLPixel, ctx);
-  const pixel = ctx.getImageData(x, y, 1, 1);
+  ctxDraw.clearRect(0, 0, canvas.width, canvas.height); //  clear cnavas
+  const pixel = ctxSorce.getImageData(x, y, 1, 1);
   const pixelHsv = RGBtoHSV(pixel.data[0], pixel.data[1], pixel.data[2]);
   let newRgb = HSVtoRGB(pixelHsv.h, pixelHsv.s, pixelHsv.v);
   pixelHsv.v = (pixelHsv.v >= 50) ? pixelHsv.v - 15 : pixelHsv.v + 15;
   newRgb = HSVtoRGB(pixelHsv.h, pixelHsv.s, pixelHsv.v);
-  const imgData = ctx.createImageData(1, 1);
+  const imgData = ctxDraw.createImageData(1, 1);
   imgData.data[0] = newRgb.r;
   imgData.data[1] = newRgb.g;
   imgData.data[2] = newRgb.b;
   imgData.data[3] = 255;
-  ctx.putImageData(imgData, x, y, 0, 0, 1, 1);
+  ctxDraw.putImageData(imgData, x, y, 0, 0, 1, 1);
   return {
     x,
     y,
