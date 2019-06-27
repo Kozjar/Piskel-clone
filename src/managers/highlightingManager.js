@@ -64,7 +64,7 @@ export default function highlightPixel(x, y, ctx, lastHLPixel) {
   const pixel = ctx.getImageData(x, y, 1, 1);
   const pixelHsv = RGBtoHSV(pixel.data[0], pixel.data[1], pixel.data[2]);
   let newRgb = HSVtoRGB(pixelHsv.h, pixelHsv.s, pixelHsv.v);
-  pixelHsv.v = (pixelHsv.v >= 50) ? pixelHsv.v - 10 : pixelHsv.v + 10;
+  pixelHsv.v = (pixelHsv.v >= 50) ? pixelHsv.v - 15 : pixelHsv.v + 15;
   newRgb = HSVtoRGB(pixelHsv.h, pixelHsv.s, pixelHsv.v);
   const imgData = ctx.createImageData(1, 1);
   imgData.data[0] = newRgb.r;

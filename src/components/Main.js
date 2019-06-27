@@ -9,6 +9,7 @@ import Canvas from './Canvas/Canvas';
 // Tools import
 import * as penTool from '../Tools/penTool';
 import * as colotPickerTool from '../Tools/colotPickerTool';
+import * as lineTool from '../Tools/lineTool';
 
 // Managers import
 import * as frameManager from '../managers/FramesManager';
@@ -56,6 +57,9 @@ export default class Main extends Component {
         break;
       case 1:
         this.setTool(colotPickerTool);
+        break;
+      case 2:
+        this.setTool(lineTool);
         break;
       default:
         break;
