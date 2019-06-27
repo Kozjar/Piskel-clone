@@ -59,8 +59,11 @@ function deleteFrame(num) {
   }
 }
 
-function updateFramePreview() {
-  const img = document.getElementById('main-canvas').toDataURL();
+function updateFramePreview(w, h) {
+  // const ctx = document.getElementById('drawing-canvas').getContext('2d').getImageData(0, 0, w, h);
+  const canvasMain = document.getElementById('main-canvas');
+  // canvasMain.getContext('2d').putImageData(ctx, 0, 0);
+  const img = canvasMain.toDataURL();
   const framesTmp = this.state.frames;
   //  set active frame image to main canvas image
   framesTmp[this.state.activeFrame].img = img;
