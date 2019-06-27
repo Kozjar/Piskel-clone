@@ -1,8 +1,13 @@
-#main-canvas{
+.canvas{
+    position: absolute;
     width: 32px;
     height: 32px;
-    background-color:#eee; 
+    background-color:#eee;
     image-rendering: pixelated;
+}
+
+#drawing-canvas {
+    background-color:#eee0;
 }
 
 .mouse-stats {
