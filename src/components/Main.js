@@ -86,6 +86,7 @@ export default class Main extends Component {
           onMouseDown={this.state.mouseDownContainer}
           onMouseMove={this.state.mouseMoveContainer}
           onMouseUp={this.state.mouseUpContainer} />
+        <img id="gachiBass" src="https://media1.tenor.com/images/4583240c2924d46ee4a865fd2ae3f348/tenor.gif?itemid=14354854" alt="" />
       </main>
     );
   }
