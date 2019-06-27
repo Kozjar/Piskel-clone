@@ -19,14 +19,14 @@ export default class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      frames: [],
-      activeFrame: undefined,
-      proxyFrame: undefined,
+      frames: [], // All frames info
+      activeFrame: undefined, // current actve frame
+      proxyFrame: undefined, // Element under which we want to draw frame skeleton
 
       mouseUpContainer: () => { },
       mouseMoveContainer: () => { },
       mouseDownContainer: () => { },
-      activeToolId: 0,
+      activeToolId: 0, // Id of current active tool
     };
 
     this.setActiveFrame = frameManager.setActiveFrame.bind(this);
@@ -39,11 +39,12 @@ export default class Main extends Component {
   }
 
   componentDidMount() {
-    this.addNewFrame(); //  add new frame after component was rendered
-    this.setActiveTool(0);
+    this.addNewFrame(); // Add new frame after component was rendered
+    this.setActiveTool(0); // Set active tool to pen tool
   }
 
   setTool(tool) {
+    // Assign a tools drawing functions to containers functions, which later will be past to canvas,
     this.setState({
       mouseDownContainer: tool.mouseDown,
       mouseMoveContainer: tool.mouseMove,
