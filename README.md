@@ -1,4 +1,4 @@
-# Piskel clone(こんいちわ)
+# Piskel clone(こんにちわ)
 
 ## [Visit on gh-pages](https://kozjar.github.io/Gachi_Rep/)
 
