@@ -5,10 +5,10 @@
 ## About piskel clone 
 Piskel clone it is clone of original site  [piskelapp.com](https://www.piskelapp.com/). And piskel clone use for non-profit purposes.
 
-###Build with 
+### Build with 
 The Piskel clone editor is purely built in JavaScript, React, HTML and SCSS.
 
-###Browser Support
+### Browser Support
 -Chrome(lastest)
 -Firefox(lastest)
 -Internet Explorer - unknown
