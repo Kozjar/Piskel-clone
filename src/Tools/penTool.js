@@ -1,41 +1,30 @@
-import hlPixel from '../managers/highlightingManager';
-
-function drawPixel() {
-  const imgData = this.context.createImageData(1, 1);
-  imgData.data[0] = this.R;
-  imgData.data[1] = this.G;
-  imgData.data[2] = this.B;
-  imgData.data[3] = 255;
-  this.context.putImageData(imgData, this.state.mouse.x, this.state.mouse.y, 0, 0, 1, 1);
-}
+import { drawLine, drawPixel } from '../managers/drawingManager';
 
 function mouseDown(e) {
   e.persist();
   this.context = this.canvas.getContext('2d');
-  this.draw = true;
   this.lastHlPixel = undefined;
 
-  this.context.beginPath();
-  drawPixel.bind(this)();
+  drawPixel.bind(this, this.state.mouse.x, this.state.mouse.y)();
 }
 
-function mouseMove(e) {
-  e.persist();
+function mouseMove() {
   this.context = this.canvas.getContext('2d');
-  if (this.draw === true) {
-    drawPixel.bind(this)();
+  if (this.state.mouse.x > this.state.mousePrev.x + 1
+      || this.state.mouse.x < this.state.mousePrev.x - 1
+      || this.state.mouse.y > this.state.mousePrev.y + 1
+      || this.state.mouse.y < this.state.mousePrev.y - 1) {
+    drawLine.bind(this)(this.state.mousePrev.x, this.state.mousePrev.y, this.state.mouse.x, this.state.mouse.y);
   } else {
-    this.lastHlPixel = hlPixel(this.state.mouse.x, this.state.mouse.y, this.context, this.lastHlPixel);
+    drawPixel.bind(this)(this.state.mouse.x, this.state.mouse.y);
   }
 }
 
-function mouseUp(e) {
-  e.persist();
+function mouseUp() {
   this.context = this.canvas.getContext('2d');
-  this.draw = false;
-  this.context.closePath();
-  this.props.onUpdateFramePreview(); // update active frame preview
-  drawPixel.bind(this)();
+  drawPixel.bind(this)(this.state.mouse.x, this.state.mouse.y);
 }
 
-export { mouseDown, mouseMove, mouseUp };
+export {
+  mouseDown, mouseMove, mouseUp,
+};
