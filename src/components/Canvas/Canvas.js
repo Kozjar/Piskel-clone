@@ -13,6 +13,7 @@ export default class Canvas extends Component {
       endDrawingContainer: undefined,
       mouse: { x: 0, y: 0 }, // Current mouse position
       mousePrev: { x: 0, y: 0 }, // Last mouse position
+      showMousePos: false, // Indicates if mouse position should be showen for user
     };
     this.canvas = undefined; // HTML main canvas element
     this.drawingCanvas = undefined; // HTML drawing canvas element
@@ -28,6 +29,22 @@ export default class Canvas extends Component {
   componentDidMount() { // Set canvas elements
     this.canvas = document.getElementById('main-canvas');
     this.drawingCanvas = document.getElementById('drawing-canvas');
+
+    document.body.addEventListener('mousemove', this.onMouseMove.bind(this));
+    document.body.addEventListener('mouseup', this.onMouseUp.bind(this));
+  }
+
+  setMousePos(x, y, func) {
+    this.setState((state, props) => ({
+      mousePrev: {
+        x: state.mouse.x,
+        y: state.mouse.y,
+      },
+      mouse: {
+        x,
+        y,
+      },
+    }), func);
   }
 
   setCanvasScale(n) { // set canvas scale (not used now)
@@ -35,13 +52,13 @@ export default class Canvas extends Component {
   }
 
   onMouseDown(e) {
+    this.draw = true;
     this.context = this.drawingCanvas.getContext('2d'); // Set current context to drawing canvas ctx
     hlPixel(-1, -1); // Unhighlight pixel
     this.props.onMouseDown.bind(this, e)(); // execute tools mouseDown function
   }
 
   onMouseMove(e) {
-    e.persist();
     const newCoord = { // Get current nouse coordinates
       x: Math.floor((e.pageX - this.canvas.offsetLeft) / this.state.scale),
       y: Math.floor((e.pageY - this.canvas.offsetTop) / this.state.scale),
@@ -49,45 +66,27 @@ export default class Canvas extends Component {
 
     // If mouse moved to another position, update actual coords
     if (newCoord.x !== this.state.mouse.x || newCoord.y !== this.state.mouse.y) {
-      this.setState((state, props) => ({
-        mousePrev: {
-          x: state.mouse.x,
-          y: state.mouse.y,
-        },
-        mouse: {
-          x: newCoord.x,
-          y: newCoord.y,
-        },
-      }), () => {
+      this.setMousePos(newCoord.x, newCoord.y, () => {
       // After we set new coords execute mouseMove tools function
       // or just highlight current pixel if we dont want to draw something
         this.context = this.drawingCanvas.getContext('2d'); // Set current context to drawing canvas ctx
         if (this.draw) {
-          this.props.onMouseMove.bind(this, e)();
+          this.props.onMouseMove.bind(this, e)(); // execute tools mouseMove function
         } else {
-          hlPixel(this.state.mouse.x, this.state.mouse.y);
+          hlPixel(this.state.mouse.x, this.state.mouse.y); // Highlight current pixel
         }
       });
     }
   }
 
   onMouseUp(e) {
-    this.context = this.drawingCanvas.getContext('2d'); // Set current context to drawing canvas ctx
-    this.props.onMouseUp.bind(this, e)(); // Execute mouseUp tools function
-    hlPixel(this.state.mouse.x, this.state.mouse.y); // Highlight current pixel
-    this.props.onUpdateFramePreview(this.canvas.width, this.canvas.height); // update active frame preview
-  }
-
-  // Executes when mouse leaves canvas
-  onMouseLeave() {
-    const endDraw = () => {
-      this.draw = false; // Stop drawing
+    if (this.draw) {
+      this.draw = false;
+      this.context = this.drawingCanvas.getContext('2d'); // Set current context to drawing canvas ctx
+      this.props.onMouseUp.bind(this, e)(); // Execute mouseUp tools function
+      hlPixel(this.state.mouse.x, this.state.mouse.y); // Highlight current pixel
       this.props.onUpdateFramePreview(this.canvas.width, this.canvas.height); // update active frame preview
-      document.body.removeEventListener('mouseup', endDraw);
-    };
-    // Add listener to whole page to stop drawing when we release mouse
-    document.body.addEventListener('mouseup', endDraw.bind(this));
-    hlPixel(-1, -1); // Unhighlight pixel
+    }
   }
 
   render() {
@@ -101,12 +100,17 @@ export default class Canvas extends Component {
           <canvas style={style} className="canvas" id="main-canvas" width="32" height="32"></canvas>
           <canvas style={style} className="canvas" id="drawing-canvas" width="32" height="32"
                   onMouseDown={this.onMouseDown.bind(this)}
-                  onMouseMove={this.onMouseMove.bind(this)}
-                  onMouseUp={this.onMouseUp.bind(this)}
-                  onMouseLeave={this.onMouseLeave.bind(this)}>
+                  onMouseLeave={() => this.setState({ showMousePos: false })}
+                  onMouseEnter={() => this.setState({ showMousePos: true })} >
           </canvas>
         </div>
-        <div className="mouse-stats">PrevX: {this.state.mousePrev.x}; PrevY: {this.state.mousePrev.y}<br />x: {this.state.mouse.x}; y: {this.state.mouse.y}</div>
+        {
+          (this.state.showMousePos)
+          && <div className="mouse-stats">
+            PrevX: {this.state.mousePrev.x}; PrevY: {this.state.mousePrev.y}<br />
+            x: {this.state.mouse.x}; y: {this.state.mouse.y}
+          </div>
+        }
       </Fragment>
     );
   }

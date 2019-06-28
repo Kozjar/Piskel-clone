@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+// Components import
 import ToolsBar from './ToolsBar/ToolsBar';
 import FramesBar from './FramesBar/FramesBar';
 import Workspace from './Workspace/Workspace';

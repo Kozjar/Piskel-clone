@@ -5,13 +5,13 @@ const startPos = {
   y: 0,
 };
 
-function mouseDown(e) {
+function mouseDown() {
   startPos.x = this.state.mouse.x;
   startPos.y = this.state.mouse.y;
   this.draw = true;
 }
 
-function mouseMove(e) {
+function mouseMove() {
   if (this.draw === false) return;
 
   this.context.clearRect(0, 0, this.canvas.width, this.canvas.height); //  clear cnavas
@@ -21,7 +21,7 @@ function mouseMove(e) {
   drawLine.bind(this)(startPos.x, startPos.y, this.state.mouse.x, startPos.y);
 }
 
-function mouseUp(e) {
+function mouseUp() {
   this.draw = false;
   this.context = this.canvas.getContext('2d');
   drawLine.bind(this)(startPos.x, startPos.y, startPos.x, this.state.mouse.y);

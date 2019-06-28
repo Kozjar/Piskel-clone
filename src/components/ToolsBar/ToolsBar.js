@@ -19,12 +19,12 @@ export default class ToolsBar extends Component {
     return (
       <div className="tools-bar">
         <div className={`tool${(this.props.activeToolId === 0) ? ' activeTool' : ''}`} onClick={() => this.props.setActiveTool(0)}>Pen</div>
-        <div className={`tool${(this.props.activeToolId === 1) ? ' activeTool' : ''}`} onClick={() => this.props.setActiveTool(1)} >Colour picker</div>
-        <div className={`tool${(this.props.activeToolId === 2) ? ' activeTool' : ''}`} onClick={() => this.props.setActiveTool(2)} >Bucket</div>
-        <div className={`tool${(this.props.activeToolId === 3) ? ' activeTool' : ''}`} onClick={() => this.props.setActiveTool(3)} >Eraser</div>
-        <div className={`tool${(this.props.activeToolId === 4) ? ' activeTool' : ''}`} onClick={() => this.props.setActiveTool(4)} >Move</div>
+        <div className={`tool${(this.props.activeToolId === 1) ? ' activeTool' : ''}`} onClick={() => this.props.setActiveTool(1)}>Colour picker</div>
+        <div className={`tool${(this.props.activeToolId === 2) ? ' activeTool' : ''}`} onClick={() => this.props.setActiveTool(2)}>Line</div>
+        <div className={`tool${(this.props.activeToolId === 3) ? ' activeTool' : ''}`} onClick={() => this.props.setActiveTool(3)}>Square</div>
+        <div className={`tool${(this.props.activeToolId === 4) ? ' activeTool' : ''}`} onClick={() => this.props.setActiveTool(4)}>Erazer</div>
         <div className={`tool${(this.props.activeToolId === 5) ? ' activeTool' : ''}`} onClick={() => this.props.setActiveTool(5)}>Rectangle</div>
-        <div className={`tool${(this.props.activeToolId === 6) ? ' activeTool' : ''}`} onClick={() => this.props.setActiveTool(6)} >Circle</div>
+        <div className={`tool${(this.props.activeToolId === 6) ? ' activeTool' : ''}`} onClick={() => this.props.setActiveTool(6)}>Circle</div>
         <div className="current-colour"></div>
       </div>
     );
