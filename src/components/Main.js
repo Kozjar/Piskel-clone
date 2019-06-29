@@ -12,6 +12,7 @@ import * as penTool from '../Tools/penTool';
 import * as colotPickerTool from '../Tools/colotPickerTool';
 import * as lineTool from '../Tools/lineTool';
 import * as squareTool from '../Tools/squareTool';
+import * as eraserTool from '../Tools/eraserTool';
 
 // Managers import
 import * as frameManager from '../managers/FramesManager';
@@ -66,6 +67,9 @@ export default class Main extends Component {
         break;
       case 3:
         this.setTool(squareTool);
+        break;
+      case 4:
+        this.setTool(eraserTool);
         break;
       default:
         break;

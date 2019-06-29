@@ -4,7 +4,7 @@ function drawPixel(x, y) {
   imgData.data[0] = this.R;
   imgData.data[1] = this.G;
   imgData.data[2] = this.B;
-  imgData.data[3] = 255;
+  imgData.data[3] = this.Alpha;
   this.context.putImageData(imgData, x, y, 0, 0, 1, 1);
 }
 

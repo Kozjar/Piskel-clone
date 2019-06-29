@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { Component } from 'react';
 
+
 export default class ToolsBar extends Component {
   constructor(props) {
     super(props);
@@ -18,7 +19,7 @@ export default class ToolsBar extends Component {
   render() {
     return (
       <div className="tools-bar">
-        <div className={`tool${(this.props.activeToolId === 0) ? ' activeTool' : ''}`} onClick={() => this.props.setActiveTool(0)}>Pen</div>
+        <div className={`tool${(this.props.activeToolId === 0) ? ' activeTool' : ''}`} onClick={() => this.props.setActiveTool(0)}></div>
         <div className={`tool${(this.props.activeToolId === 1) ? ' activeTool' : ''}`} onClick={() => this.props.setActiveTool(1)}>Colour picker</div>
         <div className={`tool${(this.props.activeToolId === 2) ? ' activeTool' : ''}`} onClick={() => this.props.setActiveTool(2)}>Line</div>
         <div className={`tool${(this.props.activeToolId === 3) ? ' activeTool' : ''}`} onClick={() => this.props.setActiveTool(3)}>Square</div>
