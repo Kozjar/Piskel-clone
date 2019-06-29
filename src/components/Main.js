@@ -13,6 +13,7 @@ import * as colotPickerTool from '../Tools/colotPickerTool';
 import * as lineTool from '../Tools/lineTool';
 import * as squareTool from '../Tools/squareTool';
 import * as eraserTool from '../Tools/eraserTool';
+import * as bucketTool from '../Tools/bucketTool';
 
 // Managers import
 import * as frameManager from '../managers/FramesManager';
@@ -70,6 +71,9 @@ export default class Main extends Component {
         break;
       case 4:
         this.setTool(eraserTool);
+        break;
+      case 5:
+        this.setTool(bucketTool);
         break;
       default:
         break;
