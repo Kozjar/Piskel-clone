@@ -1,103 +1,118 @@
 // eslint-disable-next-line no-unused-vars
 import React, { Component, Fragment } from 'react';
 
+import hlPixel from '../../managers/highlightingManager';
+
 export default class Canvas extends Component {
   constructor(props) {
     super(props);
-    this.state = { scale: 20 };
-    this.canvas = undefined;
-    this.context = undefined;
-    this.mouse = { x: 0, y: 0 };
-    this.draw = false;
+    this.state = {
+      scale: 20,
+      startDrawingContainer: undefined,
+      mouseMoveContainer: undefined,
+      endDrawingContainer: undefined,
+      mouse: { x: 0, y: 0 }, // Current mouse position
+      mousePrev: { x: 0, y: 0 }, // Last mouse position
+      showMousePos: false, // Indicates if mouse position should be showen for user
+    };
+    this.canvas = undefined; // HTML main canvas element
+    this.drawingCanvas = undefined; // HTML drawing canvas element
+    this.context = undefined; // any canvas contxet
+    this.draw = false; // Shows whether the current tool draws
 
-    this.startDrawing = this.startDrawing.bind(this);
-    this.mouseMove = this.mouseMove.bind(this);
-    this.endDrawing = this.endDrawing.bind(this);
+    // Active color
+    this.R = 115;
+    this.G = 81;
+    this.B = 163;
+    this.Alpha = 255;
   }
 
-  componentDidMount() {
+  componentDidMount() { // Set canvas elements
     this.canvas = document.getElementById('main-canvas');
-    this.context = this.canvas.getContext('2d');
-    this.context.lineWidth = 3;
+    this.drawingCanvas = document.getElementById('drawing-canvas');
+
+    document.body.addEventListener('mousemove', this.onMouseMove.bind(this));
+    document.body.addEventListener('mouseup', this.onMouseUp.bind(this));
   }
 
-  logMousePos() {
-    console.log(`mouse.x = ${this.mouse.x}; mouse.y = ${this.mouse.y}`);
+  setMousePos(x, y, func) {
+    this.setState((state, props) => ({
+      mousePrev: {
+        x: state.mouse.x,
+        y: state.mouse.y,
+      },
+      mouse: {
+        x,
+        y,
+      },
+    }), func);
   }
 
-  startDrawing(e) {
-    e.persist();
-    this.context = this.canvas.getContext('2d');
-    this.mouse.x = (e.pageX - this.canvas.offsetLeft) / this.state.scale;
-    this.mouse.y = (e.pageY - this.canvas.offsetTop) / this.state.scale;
-    this.draw = true;
-    this.logMousePos();
-
-    this.context.beginPath();
-    // this.context.moveTo(this.mouse.x, this.mouse.y);
-    this.a();
-  }
-
-  mouseMove(e) {
-    e.persist();
-    this.context = this.canvas.getContext('2d');
-    this.mouse.x = (e.pageX - this.canvas.offsetLeft) / this.state.scale;
-    this.mouse.y = (e.pageY - this.canvas.offsetTop) / this.state.scale;
-    if (this.draw === true) {
-      this.logMousePos();
-      this.a();
-      // this.context.lineTo(this.mouse.x, this.mouse.y);
-      // this.context.stroke();
-    }
-  }
-
-  endDrawing(e) {
-    e.persist();
-    this.context = this.canvas.getContext('2d');
-    this.mouse.x = (e.pageX - this.canvas.offsetLeft) / this.state.scale;
-    this.mouse.y = (e.pageY - this.canvas.offsetTop) / this.state.scale;
-    this.draw = false;
-    this.logMousePos();
-    // this.context.lineTo(this.mouse.x, this.mouse.y);
-    // this.context.stroke();
-    this.context.closePath();
-
-    this.props.onUpdateFramePreview(); // update active frame preview
-  }
-
-  setCanvasScale(n) {
+  setCanvasScale(n) { // set canvas scale (not used now)
     this.setState({ scale: n });
   }
 
-  a() {
-    const imgData = this.context.createImageData(1, 1);
-    // const index = 4 * (this.mouse.x + this.mouse.y * 500);
-    for (let i = 0; i < imgData.data.length; i += 4) {
-      imgData.data[i + 0] = 0;
-      imgData.data[i + 1] = 0;
-      imgData.data[i + 2] = 0;
-      imgData.data[i + 3] = 255;
+  onMouseDown(e) {
+    this.draw = true;
+    this.context = this.drawingCanvas.getContext('2d'); // Set current context to drawing canvas ctx
+    hlPixel(-1, -1); // Unhighlight pixel
+    this.props.onMouseDown.bind(this, e)(); // execute tools mouseDown function
+  }
+
+  onMouseMove(e) {
+    const newCoord = { // Get current nouse coordinates
+      x: Math.floor((e.pageX - this.canvas.offsetLeft) / this.state.scale),
+      y: Math.floor((e.pageY - this.canvas.offsetTop) / this.state.scale),
+    };
+
+    // If mouse moved to another position, update actual coords
+    if (newCoord.x !== this.state.mouse.x || newCoord.y !== this.state.mouse.y) {
+      this.setMousePos(newCoord.x, newCoord.y, () => {
+        // After we set new coords execute mouseMove tools function
+        // or just highlight current pixel if we dont want to draw something
+        this.context = this.drawingCanvas.getContext('2d'); // Set current context to drawing canvas ctx
+        if (this.draw) {
+          this.props.onMouseMove.bind(this, e)(); // execute tools mouseMove function
+        } else {
+          hlPixel(this.state.mouse.x, this.state.mouse.y); // Highlight current pixel
+        }
+      });
     }
-    this.context.putImageData(imgData, this.mouse.x, this.mouse.y, 0, 0, 1, 1);
+  }
+
+  onMouseUp(e) {
+    if (this.draw) {
+      this.draw = false;
+      this.context = this.drawingCanvas.getContext('2d'); // Set current context to drawing canvas ctx
+      this.props.onMouseUp.bind(this, e)(); // Execute mouseUp tools function
+      hlPixel(this.state.mouse.x, this.state.mouse.y); // Highlight current pixel
+      this.props.onUpdateFramePreview(this.canvas.width, this.canvas.height); // update active frame preview
+    }
   }
 
   render() {
     const style = {
-      transform: `scale(${this.state.scale})`,
+      transform: `scale(${this.state.scale})`, // Set canvas scale to current scale num
       transformOrigin: '0 0',
-      marginRight: `${32 * (this.state.scale - 1)}px`,
-      marginBottom: `${32 * (this.state.scale - 1)}px`,
     };
     return (
-      <div>
-        <canvas style={style} id="main-canvas" width="32" height="32" onMouseDown={this.startDrawing} onMouseMove={this.mouseMove} onMouseUp={this.endDrawing}>
-        </canvas>
-        <button onClick={() => this.setCanvasScale(1)}>scale 1</button>
-        <button onClick={() => this.setCanvasScale(0.5)}>scale 0.5</button>
-        <button onClick={() => this.setCanvasScale(2)}>scale 2</button>
-        <button onClick={() => this.setCanvasScale(this.state.scale + 1)}>scale +</button>
-        <button onClick={() => this.setCanvasScale(this.state.scale - 1)}>scale -</button>
-      </div>
+      <Fragment>
+        <div id="main-canvas-container">
+          <canvas style={style} className="canvas" id="main-canvas" width="32" height="32"></canvas>
+          <canvas style={style} className="canvas" id="drawing-canvas" width="32" height="32"
+            onMouseDown={this.onMouseDown.bind(this)}
+            onMouseLeave={() => this.setState({ showMousePos: false })}
+            onMouseEnter={() => this.setState({ showMousePos: true })} >
+          </canvas>
+        </div>
+        {
+          (this.state.showMousePos)
+          && <div className="mouse-stats">
+            PrevX: {this.state.mousePrev.x}; PrevY: {this.state.mousePrev.y}<br />
+            x: {this.state.mouse.x}; y: {this.state.mouse.y}
+          </div>
+        }
+      </Fragment>
     );
   }
 }

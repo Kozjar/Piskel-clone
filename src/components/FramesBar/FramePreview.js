@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { Component, Fragment } from 'react';
 
 export default class FramePreview extends Component {

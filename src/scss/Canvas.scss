@@ -1,6 +1,29 @@
-#main-canvas{
+@import './Presets.scss';
+
+#main-canvas-container {
+    height: 640px;
+    width: 640px;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAABlBMVEVMTExVVVUnhsEkAAAAHUlEQVR4AWOAAUYoQOePEAUj3v9oYDQ9gMBoegAAJFwCAbLaTIMAAAAASUVORK5CYII=') repeat;
+}
+
+.canvas{
+    position: absolute;
     width: 32px;
     height: 32px;
-    background-color:#eee; 
     image-rendering: pixelated;
+}
+
+#drawing-canvas {
+    background-color:#eee0;
+}
+
+#main-canvas {
+    background-color:#eee0;
+}
+
+.mouse-stats {
+    position: absolute;
+    top: 800px;
+    left: 1000px;
+    color: white;
 }
