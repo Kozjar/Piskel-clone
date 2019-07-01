@@ -27,7 +27,10 @@ export default class ToolsBar extends Component {
         <div className={`tool${(this.props.activeToolId === 5) ? ' activeTool' : ''}`} onClick={() => this.props.setActiveTool(5)}>Bucket</div>
         <div className={`tool${(this.props.activeToolId === 6) ? ' activeTool' : ''}`} onClick={() => this.props.setActiveTool(6)}>Rectangle</div>
         <div className={`tool${(this.props.activeToolId === 7) ? ' activeTool' : ''}`} onClick={() => this.props.setActiveTool(7)}>Circle</div>
-        <div className="current-colour"></div>
+        <div className="current-colour">
+          <img src="../Assets/icons/blur.png" alt="" />
+        </div>
+        <img src="../../Assets/icons/blur.png" alt="" />
       </div>
     );
   }
