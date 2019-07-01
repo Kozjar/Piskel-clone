@@ -23,6 +23,13 @@ export default class Main extends Component {
 
   componentDidMount() {
     this.addNewFrame(); //  add new frame after component was rendered
+    this.addNewFrame(); //  add new frame after component was rendered
+    this.addNewFrame(); //  add new frame after component was rendered
+    this.addNewFrame(); //  add new frame after component was rendered
+    this.addNewFrame(); //  add new frame after component was rendered
+    this.addNewFrame(); //  add new frame after component was rendered
+    this.addNewFrame(); //  add new frame after component was rendered
+    this.addNewFrame(); //  add new frame after component was rendered
   }
 
   render() {
