@@ -12,6 +12,8 @@ import * as penTool from '../Tools/penTool';
 import * as colotPickerTool from '../Tools/colotPickerTool';
 import * as lineTool from '../Tools/lineTool';
 import * as squareTool from '../Tools/squareTool';
+import * as eraserTool from '../Tools/eraserTool';
+import * as bucketTool from '../Tools/bucketTool';
 
 // Managers import
 import * as frameManager from '../managers/FramesManager';
@@ -67,6 +69,12 @@ export default class Main extends Component {
       case 3:
         this.setTool(squareTool);
         break;
+      case 4:
+        this.setTool(eraserTool);
+        break;
+      case 5:
+        this.setTool(bucketTool);
+        break;
       default:
         break;
     }
@@ -92,7 +100,6 @@ export default class Main extends Component {
           onMouseDown={this.state.mouseDownContainer}
           onMouseMove={this.state.mouseMoveContainer}
           onMouseUp={this.state.mouseUpContainer} />
-        {/* <img id="gachiBass" src="https://media1.tenor.com/images/4583240c2924d46ee4a865fd2ae3f348/tenor.gif?itemid=14354854" alt="" /> */}
       </main>
     );
   }
