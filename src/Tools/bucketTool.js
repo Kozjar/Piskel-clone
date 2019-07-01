@@ -1,11 +1,11 @@
-function mouseDown() {
+function mouseDown(e) {
   this.context = this.canvas.getContext('2d');
   const imageData = this.context.getImageData(0, 0, 636, 636);
   const { width } = imageData;
   const { height } = imageData;
   const color = 255;
   const borderColor = 255;
-  const stack = [[this.canvas.offsetLeft, this.canvas.offsetTop]];
+  const stack = [[Math.floor((e.pageX - this.canvas.offsetLeft) / this.state.scale), Math.floor((e.pageY - this.canvas.offsetTop) / this.state.scale)]];
   let pixel;
   let point = 0;
   while (stack.length > 0) {
