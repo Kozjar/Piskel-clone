@@ -1,24 +1,45 @@
 @import './Presets.scss';
 
 .frames-bar {
-    align-items: center;
-    height: 100vh;
-    width: 184px;
-    box-sizing: border-box;
-    border-radius: 5px;
-    border: 5px solid $borderColor;
-    background-color: $bgCologBlock;
-    overflow: auto;
-    color: white;
-    .active-frame {
-      border-color: $specialColor;
+  align-items: center;
+  height: 100vh;
+  width: 184px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  background-color: $bgCologBlock;
+  overflow-y: scroll;
+  color: white;
+  .active-frame {
+    border-color: $specialColor;
+  }
+  .proxy-frame {
+    width: 108.3px;
+    height: 108.4px;
+    border: 4px dashed $borderColor;
+    margin-top: 20px;
+    margin-left: 20px;
+  }
+  &__frame-preview {
+    position: relative;
+    image-rendering: pixelated;
+    display: flex;
+    justify-content: space-between;
+    width: 108.3px;
+    height: 108.4px;
+    border: 4px solid $borderColor;
+    margin: 0 auto;
+    margin-top: 20px;
+    canvas {
+      background-color: white;
     }
-    .proxy-frame {
-      width: 108.3px;
-      height: 108.4px;
-      border: 4px dashed $borderColor;
-      margin-top: 20px;
-      margin-left: 20px;
+    &-num {
+      width: 30px;
+      height: 30px;
+      background-color: coral;
+      text-align: center;
+      line-height: 30px;
+      font-size: 1.3em;
+      font-weight: bold;
     }
     &__frame-preview {
       position: relative;
@@ -58,4 +79,23 @@
         color: white;
         background-color: $bgColorMain;
     }
+  }
+  &__add-new-frame-btn {
+      margin: 25px auto;
+      display: block;
+      height: 50px;
+      width: 120px;
+      color: white;
+      background-color: $bgColorMain;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  background-color: $bgColorMain;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $bgColorSemi;
+  border-radius: 20px;
 }
