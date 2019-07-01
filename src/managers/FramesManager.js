@@ -9,6 +9,7 @@ function addNewFrame() {
 }
 
 function setActiveFrame(num) {
+  console.log(num);
   this.setState({
     activeFrame: num,
   }, () => {
@@ -17,6 +18,7 @@ function setActiveFrame(num) {
 
     context.clearRect(0, 0, canvas.width, canvas.height); //  clear cnavas
     //  if active frame has image, draw this image on main canvas
+    console.log(this.state.activeFrame);
     if (this.state.frames[this.state.activeFrame].img) {
       const img = new Image();
       img.src = this.state.frames[this.state.activeFrame].img;
