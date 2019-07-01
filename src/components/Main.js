@@ -30,6 +30,9 @@ export default class Main extends Component {
       mouseMoveContainer: () => { },
       mouseDownContainer: () => { },
       activeToolId: 0, // Id of current active tool
+
+      mainColor: { r: 230, g: 140, b: 50 },
+      semiColor: { r: 175, g: 60, b: 93 },
     };
 
     this.setActiveFrame = frameManager.setActiveFrame.bind(this);
@@ -81,11 +84,26 @@ export default class Main extends Component {
     this.setState({ activeToolId: toolId });
   }
 
+  setMainColor(r, g, b) {
+    this.setState({ mainColor: { r, g, b } });
+  }
+
+  setSemiColor(r, g, b) {
+    this.setState({ semiColor: { r, g, b } });
+  }
+
+  swapColors() {
+    this.setState((state, props) => ({ mainColor: state.semiColor, semiColor: state.mainColor }));
+  }
+
   render() {
     return (
       <main>
         <ToolsBar setActiveTool={this.setActiveTool}
-          activeToolId={this.state.activeToolId} />
+          activeToolId={this.state.activeToolId} 
+          mainColor={this.state.mainColor}
+          semiColor={this.state.semiColor}
+          swapColors={this.swapColors.bind(this)}/>
         <FramesBar onSetActiveFrame={this.setActiveFrame}
           activeFrame={this.state.activeFrame}
           proxyFrame={this.state.proxyFrame}
@@ -99,7 +117,11 @@ export default class Main extends Component {
         <Canvas onUpdateFramePreview={this.updateFramePreview}
           onMouseDown={this.state.mouseDownContainer}
           onMouseMove={this.state.mouseMoveContainer}
-          onMouseUp={this.state.mouseUpContainer} />
+          onMouseUp={this.state.mouseUpContainer}
+          mainColor={this.state.mainColor}
+          semiColor={this.state.semiColor}
+          setMainColor={this.setMainColor.bind(this)}
+          setSemiColor={this.setSemiColor.bind(this)}/>
       </main>
     );
   }

@@ -9,6 +9,8 @@ import circle from '../../Assets/icons/circle.png';
 import line from '../../Assets/icons/diagonal-line.png';
 
 
+
+
 export default class ToolsBar extends Component {
   constructor(props) {
     super(props);
@@ -47,7 +49,12 @@ export default class ToolsBar extends Component {
         <div className={`tool${(this.props.activeToolId === 6) ? ' activeTool' : ''}`} onClick={() => this.props.setActiveTool(6)}>
           <img src={circle} alt="" />
         </div>
-        <div className="current-colour">
+        <div className="current-colour-container">
+          <div style={{ backgroundColor: `rgb(${this.props.mainColor.r}, ${this.props.mainColor.g}, ${this.props.mainColor.b})` }}
+            className="main-color current-color"></div>
+          <div className="swap-colors-img" onClick={this.props.swapColors}></div>
+          <div style={{ backgroundColor: `rgb(${this.props.semiColor.r}, ${this.props.semiColor.g}, ${this.props.semiColor.b})` }}
+            className="semi-color current-color"></div>
         </div>
       </div>
     );
