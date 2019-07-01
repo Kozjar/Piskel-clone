@@ -1,14 +1,23 @@
+@import './Presets.scss';
+
+#main-canvas-container {
+    height: 636px;
+    width: 636px;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAABlBMVEVMTExVVVUnhsEkAAAAHUlEQVR4AWOAAUYoQOePEAUj3v9oYDQ9gMBoegAAJFwCAbLaTIMAAAAASUVORK5CYII=') repeat;
+}
+
 .canvas{
     position: absolute;
     width: 32px;
     height: 32px;
-    background-color:#eee;
     image-rendering: pixelated;
-    background-image: url('https://cs10.pikabu.ru/post_img/big/2018/12/24/1/1545608157198144185.jpg');
-    background-size: contain;
 }
 
 #drawing-canvas {
+    background-color:#eee0;
+}
+
+#main-canvas {
     background-color:#eee0;
 }
 
@@ -17,9 +26,4 @@
     top: 800px;
     left: 1000px;
     color: white;
-}
-#gachiBass {
-    margin-left: 700px;
-    width: 200px;
-    height: 200px;
 }

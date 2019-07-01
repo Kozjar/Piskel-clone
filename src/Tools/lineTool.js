@@ -5,21 +5,17 @@ const startPos = {
   y: 0,
 };
 
-function mouseDown(e) {
+function mouseDown() {
   startPos.x = this.state.mouse.x;
   startPos.y = this.state.mouse.y;
-  this.draw = true;
 }
 
-function mouseMove(e) {
-  if (this.draw === false) return;
-
+function mouseMove() {
   this.context.clearRect(0, 0, this.canvas.width, this.canvas.height); //  clear cnavas
   drawLine.bind(this)(startPos.x, startPos.y, this.state.mouse.x, this.state.mouse.y);
 }
 
-function mouseUp(e) {
-  this.draw = false;
+function mouseUp() {
   this.context = this.canvas.getContext('2d');
   drawLine.bind(this)(startPos.x, startPos.y, this.state.mouse.x, this.state.mouse.y);
 }
