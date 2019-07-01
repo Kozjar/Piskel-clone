@@ -1,24 +1,59 @@
 @import './Presets.scss';
 
 .tools-bar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
     color: azure;
     img{
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 40px;
     }
-    div{
+    .tool{
         width: 50px;
         height: 50px;
         border: 1px solid wheat;
         text-align: center;
     }
-    .current-colour{
-        width: 50px;
-        height: 50px;
-        border: 1px solid wheat;
-        background-color: rgb(115, 81, 163);
+    .current-colour-container{
+        position: relative;
+        left: -13px;
+        margin-top: 30px;
+        .current-color {
+            position: relative;
+            height: 40px;
+            width: 40px;
+            border: 3px solid $borderColor;
+            cursor: pointer;
+            &:hover {
+                border: 3px solid $bgColorSemi;
+            }
+        }
+        .main-color {
+            z-index: 100;
+        }
+        .semi-color {
+            z-index: 50;
+            top: -37px;
+            left: 27px;
+        }
+        .swap-colors-img {
+            position: relative;
+            left: 1px;
+            top: 5px;
+            height: 20px;
+            width: 20px;
+            background-size: cover;
+            background-image: url(../Assets/icons/swap_colors.png);
+            cursor: pointer;
+            &:hover {
+                background-image: url(../Assets/icons/swap_colors_active.png);
+            }
+        }
     }
     .activeTool {
         border: 3px solid $specialColor;
     }
+
 }

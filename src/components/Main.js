@@ -12,6 +12,8 @@ import * as penTool from '../Tools/penTool';
 import * as colotPickerTool from '../Tools/colotPickerTool';
 import * as lineTool from '../Tools/lineTool';
 import * as squareTool from '../Tools/squareTool';
+import * as eraserTool from '../Tools/eraserTool';
+import * as bucketTool from '../Tools/bucketTool';
 
 // Managers import
 import * as frameManager from '../managers/FramesManager';
@@ -28,6 +30,9 @@ export default class Main extends Component {
       mouseMoveContainer: () => { },
       mouseDownContainer: () => { },
       activeToolId: 0, // Id of current active tool
+
+      mainColor: { r: 230, g: 140, b: 50 },
+      semiColor: { r: 175, g: 60, b: 93 },
     };
 
     this.setActiveFrame = frameManager.setActiveFrame.bind(this);
@@ -67,17 +72,38 @@ export default class Main extends Component {
       case 3:
         this.setTool(squareTool);
         break;
+      case 4:
+        this.setTool(eraserTool);
+        break;
+      case 5:
+        this.setTool(bucketTool);
+        break;
       default:
         break;
     }
     this.setState({ activeToolId: toolId });
   }
 
+  setMainColor(r, g, b) {
+    this.setState({ mainColor: { r, g, b } });
+  }
+
+  setSemiColor(r, g, b) {
+    this.setState({ semiColor: { r, g, b } });
+  }
+
+  swapColors() {
+    this.setState((state, props) => ({ mainColor: state.semiColor, semiColor: state.mainColor }));
+  }
+
   render() {
     return (
       <main>
         <ToolsBar setActiveTool={this.setActiveTool}
-          activeToolId={this.state.activeToolId} />
+          activeToolId={this.state.activeToolId} 
+          mainColor={this.state.mainColor}
+          semiColor={this.state.semiColor}
+          swapColors={this.swapColors.bind(this)}/>
         <FramesBar onSetActiveFrame={this.setActiveFrame}
           activeFrame={this.state.activeFrame}
           proxyFrame={this.state.proxyFrame}
@@ -91,8 +117,11 @@ export default class Main extends Component {
         <Canvas onUpdateFramePreview={this.updateFramePreview}
           onMouseDown={this.state.mouseDownContainer}
           onMouseMove={this.state.mouseMoveContainer}
-          onMouseUp={this.state.mouseUpContainer} />
-        {/* <img id="gachiBass" src="https://media1.tenor.com/images/4583240c2924d46ee4a865fd2ae3f348/tenor.gif?itemid=14354854" alt="" /> */}
+          onMouseUp={this.state.mouseUpContainer}
+          mainColor={this.state.mainColor}
+          semiColor={this.state.semiColor}
+          setMainColor={this.setMainColor.bind(this)}
+          setSemiColor={this.setSemiColor.bind(this)}/>
       </main>
     );
   }
