@@ -100,7 +100,7 @@ export default class Main extends Component {
     return (
       <main>
         <ToolsBar setActiveTool={this.setActiveTool}
-          activeToolId={this.state.activeToolId} 
+          activeToolId={this.state.activeToolId}
           mainColor={this.state.mainColor}
           semiColor={this.state.semiColor}
           swapColors={this.swapColors.bind(this)}/>

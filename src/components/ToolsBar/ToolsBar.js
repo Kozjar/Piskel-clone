@@ -9,8 +9,6 @@ import circle from '../../Assets/icons/circle.png';
 import line from '../../Assets/icons/diagonal-line.png';
 
 
-
-
 export default class ToolsBar extends Component {
   constructor(props) {
     super(props);
