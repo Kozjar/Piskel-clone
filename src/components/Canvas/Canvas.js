@@ -7,7 +7,8 @@ export default class Canvas extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      scale: 20,
+      canvasSize: 32,
+      scale: 10,
       startDrawingContainer: undefined,
       mouseMoveContainer: undefined,
       endDrawingContainer: undefined,
@@ -19,6 +20,8 @@ export default class Canvas extends Component {
     this.drawingCanvas = undefined; // HTML drawing canvas element
     this.context = undefined; // any canvas contxet
     this.draw = false; // Shows whether the current tool draws
+    this.WORKSPACE_WIDTH = 940;
+    this.containerSize = this.state.canvasSize * this.state.scale;
 
     // Active color
     this.R = 115;
@@ -48,8 +51,17 @@ export default class Canvas extends Component {
     }), func);
   }
 
-  setCanvasScale(n) { // set canvas scale (not used now)
+  setScale(n) {
+    if (n < 1 || (n * this.state.canvasSize) > 1500) return;
+    this.containerSize = this.state.canvasSize * n;
     this.setState({ scale: n });
+  }
+
+  onWheel(e) {
+    const delta = e.deltaY;
+
+    if (delta > 0) this.setScale(this.state.scale * 0.9);
+    else this.setScale(this.state.scale * 1.1);
   }
 
   onMouseDown(e) {
@@ -60,9 +72,14 @@ export default class Canvas extends Component {
   }
 
   onMouseMove(e) {
+    let scaledOffset = 0;
+    if (this.containerSize > this.WORKSPACE_WIDTH) {
+      scaledOffset = (this.containerSize - this.WORKSPACE_WIDTH) / 2;
+    }
+
     const newCoord = { // Get current nouse coordinates
-      x: Math.floor((e.pageX - this.canvas.offsetLeft) / this.state.scale),
-      y: Math.floor((e.pageY - this.canvas.offsetTop) / this.state.scale),
+      x: Math.floor((e.pageX - this.canvas.parentElement.offsetLeft + scaledOffset) / this.state.scale),
+      y: Math.floor((e.pageY - this.canvas.parentElement.offsetTop + scaledOffset) / this.state.scale),
     };
 
     // If mouse moved to another position, update actual coords
@@ -91,15 +108,24 @@ export default class Canvas extends Component {
   }
 
   render() {
-    const style = {
+    const canvasStyle = {
       transform: `scale(${this.state.scale})`, // Set canvas scale to current scale num
       transformOrigin: '0 0',
     };
+    const backgroundStyle = {
+      width: this.containerSize,
+      height: this.containerSize,
+    };
+    if (this.containerSize > this.WORKSPACE_WIDTH) {
+      canvasStyle.left = `-${(this.containerSize - this.WORKSPACE_WIDTH) / 2}px`;
+      canvasStyle.top = `-${(this.containerSize - this.WORKSPACE_WIDTH) / 2}px`;
+    }
     return (
-      <Fragment>
-        <div id="main-canvas-container">
-          <canvas style={style} className="canvas" id="main-canvas" width="32" height="32"></canvas>
-          <canvas style={style} className="canvas" id="drawing-canvas" width="32" height="32"
+      <div style={{ width: `${this.WORKSPACE_WIDTH}px` }} className='workspace' onWheel={this.onWheel.bind(this)}>
+        <div style={backgroundStyle} id="main-canvas-container">
+          <div style={backgroundStyle} className='canvas-background'></div>
+          <canvas style={canvasStyle} className="canvas" id="main-canvas" width={this.state.canvasSize} height={this.state.canvasSize}></canvas>
+          <canvas style={canvasStyle} className="canvas" id="drawing-canvas" width={this.state.canvasSize} height={this.state.canvasSize}
             onMouseDown={this.onMouseDown.bind(this)}
             onMouseLeave={() => this.setState({ showMousePos: false })}
             onMouseEnter={() => this.setState({ showMousePos: true })} >
@@ -112,7 +138,7 @@ export default class Canvas extends Component {
             x: {this.state.mouse.x}; y: {this.state.mouse.y}
           </div>
         }
-      </Fragment>
+      </div>
     );
   }
 }

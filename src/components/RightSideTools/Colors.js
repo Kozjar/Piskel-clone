@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 export default class Colors extends Component {
   render() {
     return (
-      <div>
-
+      <div className='colors-container'>
+        Colors
       </div>
     );
   }

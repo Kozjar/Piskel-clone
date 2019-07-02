@@ -6,14 +6,20 @@ export default class FramePreview extends Component {
     super(props);
     this.state = { onDrag: false, elemPos: { y: 0 } };
     this.onDrag = false;
-    this.shift = { y: 0 };
+    this.shift = { y: 0, x: 0 };
     this.elemId = `preview-frame-${this.props.number}`;
     this.draggedElem = undefined;
+
     this.setActiveFrame = this.setActiveFrame.bind(this);
     this.deleteFrame = this.deleteFrame.bind(this);
     this.startDrag = this.startDrag.bind(this);
     this.moveDrag = this.moveDrag.bind(this);
     this.endDrag = this.endDrag.bind(this);
+  }
+
+  componentDidMount() {
+    document.body.addEventListener('mousemove', this.moveDrag.bind(this));
+    document.body.addEventListener('mouseup', this.endDrag.bind(this));
   }
 
   deleteFrame() {
@@ -37,17 +43,17 @@ export default class FramePreview extends Component {
       this.draggedElem.style.position = 'absolute';
       this.draggedElem.style.zIndex = '100';
       this.draggedElem.style.top = `${e.pageY - this.shift.y}px`;
+      this.draggedElem.style.left = `${e.pageX - this.shift.x}px`;
       this.props.setProxyFrame(this.props.number - 1);
     }
   }
 
   moveDrag(e) {
     if (this.onDrag) {
-      e.persist();
-      this.draggedElem = e.target;
+      this.draggedElem = document.getElementById(this.elemId);
       this.draggedElem.style.top = `${e.pageY - this.shift.y}px`;
       this.draggedElem.style.zIndex = '-100';
-      const elem = document.elementFromPoint(e.clientX, e.clientY);
+      const elem = document.elementFromPoint(200, e.clientY);
       let frameNum = elem.getAttribute('frame-preview-number');
       if (frameNum !== null) {
         frameNum = Number(frameNum);
@@ -63,10 +69,11 @@ export default class FramePreview extends Component {
       this.draggedElem.style.zIndex = '';
       this.onDrag = false;
       document.getElementById(this.elemId).style.position = '';
-      this.props.setProxyFrame(undefined);
       document.getElementById(this.elemId).style.top = '';
+      document.getElementById(this.elemId).style.left = '';
       const newPos = (this.props.number > this.props.proxyFrame)
         ? this.props.proxyFrame + 1 : this.props.proxyFrame;
+      this.props.setProxyFrame(undefined);
       this.props.changeFramePos(this.props.number, newPos);
     }
   }
@@ -84,8 +91,8 @@ export default class FramePreview extends Component {
               className={`frames-bar__frame-preview ${(this.props.isActive) ? 'active-frame' : ''}`}
               frame-preview-number={this.props.number}
               onMouseDown={this.startDrag}
-              onMouseMove={this.moveDrag}
-              onMouseUp={this.endDrag}
+              // onMouseMove={this.moveDrag}
+              // onMouseUp={this.endDrag}
               id={this.elemId}>
             <div className="frames-bar__frame-preview-num">{this.props.number}</div>
             <button className="frames-bar__frame-preview-delete-btn" onClick={this.deleteFrame}></button>

@@ -113,7 +113,6 @@ export default class Main extends Component {
           setProxyFrame={this.setProxyFrame}
           changeFramePos={this.changeFramePos} />
         <Workspace />
-        <RightSideTools />
         <Canvas onUpdateFramePreview={this.updateFramePreview}
           onMouseDown={this.state.mouseDownContainer}
           onMouseMove={this.state.mouseMoveContainer}
@@ -122,6 +121,7 @@ export default class Main extends Component {
           semiColor={this.state.semiColor}
           setMainColor={this.setMainColor.bind(this)}
           setSemiColor={this.setSemiColor.bind(this)}/>
+        <RightSideTools />
       </main>
     );
   }
