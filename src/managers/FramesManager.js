@@ -14,13 +14,12 @@ function setActiveFrame(num) {
   }, () => {
     const canvas = document.getElementById('main-canvas');
     const context = canvas.getContext('2d');
+    const { img } = this.state.frames[this.state.activeFrame];
 
     context.clearRect(0, 0, canvas.width, canvas.height); //  clear cnavas
     //  if active frame has image, draw this image on main canvas
-    if (this.state.frames[this.state.activeFrame].img) {
-      const img = new Image();
-      img.src = this.state.frames[this.state.activeFrame].img;
-      context.drawImage(img, 0, 0);
+    if (img) {
+      context.putImageData(img, 0, 0);
     }
   });
 }

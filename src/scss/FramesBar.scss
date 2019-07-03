@@ -18,7 +18,7 @@
     height: 110px;
     border: 4px dashed $borderColor;
     margin-top: 20px;
-    margin-left: 31px;
+    margin-left: 17px;
   }
   &__frame-preview {
     position: relative;
@@ -30,10 +30,12 @@
     border: 4px solid $borderColor;
     margin: 0 auto;
     margin-top: 20px;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAABlBMVEVMTExVVVUnhsEkAAAAHUlEQVR4AWOAAUYoQOePEAUj3v9oYDQ9gMBoegAAJFwCAbLaTIMAAAAASUVORK5CYII=') repeat;
     canvas {
-      background-color: white;
       position: absolute;
-      background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAABlBMVEVMTExVVVUnhsEkAAAAHUlEQVR4AWOAAUYoQOePEAUj3v9oYDQ9gMBoegAAJFwCAbLaTIMAAAAASUVORK5CYII=') repeat;
+      left: 39px;
+      top: 39px;
+      // background-color: white;
     }
     &-num {
       position: relative;

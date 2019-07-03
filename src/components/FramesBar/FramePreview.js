@@ -26,8 +26,10 @@ export default class FramePreview extends Component {
     if (prevProps !== this.props) {
       const canvas = document.getElementById(this.elemId).firstElementChild;
       if (this.props.img !== undefined) {
+        canvas.getContext('2d').putImageData(this.props.img, 0, 0);
+      } else {
         canvas.getContext('2d').clearRect(0, 0, this.props.canvasSize, this.props.canvasSize); //  clear cnavas
-      } else canvas.getContext('2d').putImageData(this.props.img, 0, 0);
+      }
     }
   }
 
@@ -87,10 +89,8 @@ export default class FramePreview extends Component {
   }
 
   render() {
-    const prevStyle = {
-      backgroundColor: 'white',
-      backgroundImage: (this.props.img !== undefined) ? `url(${this.props.img})` : '',
-      backgroundSize: 'contain',
+    const canvasScale = {
+      transform: `scale(${110 / this.props.canvasSize})`,
     };
     return (
       <Fragment>
@@ -99,7 +99,7 @@ export default class FramePreview extends Component {
           onMouseDown={this.startDrag.bind(this)}
           frame-preview-number={this.props.number}
           id={this.elemId}>
-          <canvas className='frames-bar__frame-preview-canvas' width="110" height="110"></canvas>
+          <canvas style={canvasScale} className='frames-bar__frame-preview-canvas' width="32" height="32"></canvas>
           <div className="frames-bar__frame-preview-num">{this.props.number}</div>
           <button className="frames-bar__frame-preview-delete-btn" onClick={this.deleteFrame}></button>
         </div>
