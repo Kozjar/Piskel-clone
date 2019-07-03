@@ -37,11 +37,12 @@ export default class Main extends Component {
     };
 
     this.setActiveFrame = frameManager.setActiveFrame.bind(this);
-    this.addNewFrame = frameManager.addNewFrame.bind(this);
+    this.addNewFrame = frameManager.addNewFrame.bind(this, undefined);
     this.deleteFrame = frameManager.deleteFrame.bind(this);
     this.updateFramePreview = frameManager.updateFramePreview.bind(this);
     this.setProxyFrame = frameManager.setProxyFrame.bind(this);
     this.changeFramePos = frameManager.changeFramePos.bind(this);
+    this.dublicateFrame = frameManager.dublicateFrame.bind(this);
     this.setActiveTool = this.setActiveTool.bind(this);
   }
 
@@ -101,7 +102,7 @@ export default class Main extends Component {
     return (
       <main>
         <ToolsBar setActiveTool={this.setActiveTool}
-          activeToolId={this.state.activeToolId} 
+          activeToolId={this.state.activeToolId}
           mainColor={this.state.mainColor}
           semiColor={this.state.semiColor}
           swapColors={this.swapColors.bind(this)}/>
@@ -111,6 +112,7 @@ export default class Main extends Component {
           frames={this.state.frames}
           onAddNewFrame={this.addNewFrame}
           onDeleteFrame={this.deleteFrame}
+          onDublicateFrame={this.dublicateFrame}
           setProxyFrame={this.setProxyFrame}
           changeFramePos={this.changeFramePos}
           canvasSize={this.state.canvasSize}/>

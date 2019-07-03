@@ -1,9 +1,9 @@
-function addNewFrame() {
+function addNewFrame(img) {
   this.setState((state, props) => ({
     frames: [...state.frames, { // add new element to frames array
       number: state.frames.length,
       id: state.frames.length,
-      img: undefined,
+      img,
     }], //  makes active the last frame
   }), () => { this.setActiveFrame(this.state.frames.length - 1); });
 }
@@ -18,7 +18,7 @@ function setActiveFrame(num) {
 
     context.clearRect(0, 0, canvas.width, canvas.height); //  clear cnavas
     //  if active frame has image, draw this image on main canvas
-    if (img) {
+    if (img !== undefined) {
       context.putImageData(img, 0, 0);
     }
   });
@@ -58,6 +58,16 @@ function deleteFrame(num) {
   }
 }
 
+function dublicateFrame(img, num) {
+  const { frames } = this.state;
+  frames.splice(num + 1, 0, { number: num + 1, id: num + 1, img });
+  for (let i = num + 2; i < frames.length; i += 1) {
+    frames[i].number += 1;
+    frames[i].id += 1;
+  }
+  this.setState({ frames });
+}
+
 function updateFramePreview(w, h) {
   // const ctx = document.getElementById('drawing-canvas').getContext('2d').getImageData(0, 0, w, h);
   const mainCanvasCtx = document.getElementById('main-canvas').getContext('2d');
@@ -84,5 +94,5 @@ function changeFramePos(from, to) {
 }
 
 export {
-  addNewFrame, setActiveFrame, deleteFrame, updateFramePreview, setProxyFrame, changeFramePos,
+  addNewFrame, setActiveFrame, deleteFrame, updateFramePreview, setProxyFrame, changeFramePos, dublicateFrame,
 };

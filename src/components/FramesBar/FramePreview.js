@@ -102,7 +102,8 @@ export default class FramePreview extends Component {
           id={this.elemId}>
           <canvas style={canvasScale} className='frames-bar__frame-preview-canvas' width="32" height="32"></canvas>
           <div className="frames-bar__frame-preview-num">{this.props.number}</div>
-          <button className="frames-bar__frame-preview-delete-btn" onClick={this.deleteFrame}></button>
+          <button className="frames-bar__frame-preview-btn delete-btn" onClick={this.deleteFrame}></button>
+          <button className="frames-bar__frame-preview-btn dublicate-btn" onClick={this.props.dublicateFrame}></button>
         </div>
         {(this.props.proxyFrame === this.props.number) && <div className="proxy-frame"></div>}
       </Fragment>
