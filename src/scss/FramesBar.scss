@@ -1,6 +1,7 @@
 @import './Presets.scss';
 
 .frames-bar {
+  flex-shrink: 0;
   align-items: center;
   height: 100vh;
   width: 184px;
@@ -18,7 +19,7 @@
     height: 110px;
     border: 4px dashed $borderColor;
     margin-top: 20px;
-    margin-left: 17px;
+    margin-left: 31px;
   }
   &__frame-preview {
     position: relative;

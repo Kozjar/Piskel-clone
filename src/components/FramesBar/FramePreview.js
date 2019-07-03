@@ -45,6 +45,7 @@ export default class FramePreview extends Component {
   }
 
   startDrag(e) {
+    if (!e.target.classList.contains('frames-bar__frame-preview-canvas')) return;
     e.persist();
     this.draggedElem = e.target.parentElement;
     const box = this.draggedElem.getBoundingClientRect();
@@ -63,7 +64,7 @@ export default class FramePreview extends Component {
       this.draggedElem = document.getElementById(this.elemId);
       this.draggedElem.style.top = `${e.pageY - this.shift.y}px`;
       this.draggedElem.style.zIndex = '-100';
-      const elem = document.elementFromPoint(200, e.clientY);
+      const elem = document.elementFromPoint(220, e.clientY);
       let frameNum = elem.getAttribute('frame-preview-number');
       if (frameNum !== null) {
         frameNum = Number(frameNum);
@@ -96,7 +97,7 @@ export default class FramePreview extends Component {
       <Fragment>
         {(this.props.proxyFrame === -1 && this.props.number === 0) && <div className="proxy-frame"></div>}
         <div className={`frames-bar__frame-preview ${(this.props.isActive) ? 'active-frame' : ''}`}
-          onMouseDown={this.startDrag.bind(this)}
+          onMouseDown={this.startDrag}
           frame-preview-number={this.props.number}
           id={this.elemId}>
           <canvas style={canvasScale} className='frames-bar__frame-preview-canvas' width="32" height="32"></canvas>
