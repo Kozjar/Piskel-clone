@@ -10,10 +10,8 @@ function mouseDown(e) {
   let point = 0;
   while (stack.length > 0) {
     pixel = stack.pop();
-    if (pixel[0] < 0 || pixel[0] >= width)
-      continue;
-    if (pixel[1] < 0 || pixel[1] >= height)
-      continue;
+    if (pixel[0] < 0 || pixel[0] >= width) { continue; }
+    if (pixel[1] < 0 || pixel[1] >= height) { continue; }
 
     // Alpha
     point = pixel[1] * 4 * width + pixel[0] * 4 + 3;

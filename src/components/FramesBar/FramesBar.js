@@ -15,7 +15,9 @@ export default class FramesBar extends Component {
           isActive={frame.number === this.props.activeFrame}
           onSetActiveFrame={this.props.onSetActiveFrame.bind(this)}
           setProxyFrame={this.props.setProxyFrame.bind(this)}
-          changeFramePos={this.props.changeFramePos.bind(this)}/>)}
+          changeFramePos={this.props.changeFramePos.bind(this)}
+          dublicateFrame={this.props.onDublicateFrame.bind(this, frame.img, frame.number)}
+          canvasSize={this.props.canvasSize}/>)}
         <button className="frames-bar__add-new-frame-btn" onClick={this.props.onAddNewFrame.bind(this)}>
           Add New Frame
         </button>
