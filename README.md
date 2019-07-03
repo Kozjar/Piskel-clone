@@ -1,4 +1,4 @@
-# Piskel clone(こんにちわ)
+# Piskel clone
 
 ## [Visit on gh-pages](https://kozjar.github.io/Gachi_Rep/)
 
@@ -12,8 +12,3 @@ The Piskel clone editor is purely built in JavaScript, React, HTML and SCSS.
 - Chrome(lastest)
 - Firefox(lastest)
 - Internet Explorer - unknown
-
-![deep dark fantasy](https://media1.giphy.com/media/p0PddiU93ArQc/giphy.gif)
-
-
-
