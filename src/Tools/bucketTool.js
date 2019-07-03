@@ -7,7 +7,7 @@ function compareDataColors(data, point, color) {
 
 function mouseDown(e) {
   this.context = this.canvas.getContext('2d');
-  const imageData = this.context.getImageData(0, 0, this.state.canvasSize, this.state.canvasSize);
+  const imageData = this.context.getImageData(0, 0, this.props.canvasSize, this.props.canvasSize);
   const { width } = imageData;
   const { height } = imageData;
   const pixelData = this.canvas.getContext('2d').getImageData(this.state.mouse.x, this.state.mouse.y, 1, 1).data;
