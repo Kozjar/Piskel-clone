@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { Component } from 'react';
-import { componentToHex, rgbToHex, hexToRgb } from '../../managers/colorManager';
+import { rgbToHex, hexToRgb } from '../../managers/colorManager';
 import pen from '../../Assets/icons/pencil.png';
 import eyedropper from '../../Assets/icons/eyedropper.png';
 import rectangle from '../../Assets/icons/rectangle.png';
@@ -19,29 +19,32 @@ export default class ToolsBar extends Component {
     this.swapColors = this.swapColors.bind(this);
   }
 
-  componentDidMount() { 
+  componentDidMount() {
     this.main = document.querySelector('.main-color');
     this.semi = document.querySelector('.semi-color');
   }
 
-    changeMainColor() {
-  const color = hexToRgb(this.main.value);
-  this.props.setMainColor(color.r,color.g,color.b);
+  changeMainColor() {
+    const color = hexToRgb(this.main.value);
+    this.props.setMainColor(color.r, color.g, color.b);
 
   }
+
   changeSemiColor() {
     const color = hexToRgb(this.semi.value);
-    this.props.setSemiColor(color.r,color.g,color.b);
-  
-    }
-    swapColors() {
-      const mainColor = hexToRgb(this.main.value);
-      const semiColor = hexToRgb(this.semi.value);
-      this.main.value = rgbToHex(semiColor.r,semiColor .g,semiColor .b);
-      this.semi.value = rgbToHex(mainColor.r,mainColor.g,mainColor.b);
-      this.props.setMainColor(semiColor.r,semiColor.g,semiColor.b);
-      this.props.setSemiColor(mainColor.r,mainColor.g,mainColor.b);
-    }
+    this.props.setSemiColor(color.r, color.g, color.b);
+
+  }
+
+  swapColors() {
+    const mainColor = hexToRgb(this.main.value);
+    const semiColor = hexToRgb(this.semi.value);
+    this.main.value = rgbToHex(semiColor.r, semiColor.g, semiColor.b);
+    this.semi.value = rgbToHex(mainColor.r, mainColor.g, mainColor.b);
+    this.props.setMainColor(semiColor.r, semiColor.g, semiColor.b);
+    this.props.setSemiColor(mainColor.r, mainColor.g, mainColor.b);
+  }
+
   // eslint-disable-next-line class-methods-use-this
   render() {
     return (
@@ -68,11 +71,11 @@ export default class ToolsBar extends Component {
           <img src={circle} alt="" />
         </div>
         <div className="current-colour-container">
-          <input type="color" defaultValue ={rgbToHex(this.props.mainColor.r, this.props.mainColor.g, this.props.mainColor.b)} 
-          onInput={this.changeMainColor} className="main-color current-color" />
+          <input type="color" defaultValue={rgbToHex(this.props.mainColor.r, this.props.mainColor.g, this.props.mainColor.b)}
+            onInput={this.changeMainColor} className="main-color current-color" />
           <div className="swap-colors-img" onClick={this.swapColors}></div>
-          <input type="color" defaultValue ={rgbToHex(this.props.semiColor.r, this.props.semiColor.g, this.props.semiColor.b)} 
-          onInput={this.changeSemiColor} className="semi-color current-color"/>
+          <input type="color" defaultValue={rgbToHex(this.props.semiColor.r, this.props.semiColor.g, this.props.semiColor.b)}
+            onInput={this.changeSemiColor} className="semi-color current-color" />
         </div>
       </div>
     );

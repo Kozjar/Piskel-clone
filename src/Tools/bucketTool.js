@@ -6,10 +6,7 @@ function compareDataColors(data, point, color) {
   return false;
 }
 
-function mouseDown(e) {
-  jQuery(document).ready(function ($) {
-    $('body').css('background-color', 'red');
-  })
+function mouseDown() {
   this.context = this.canvas.getContext('2d');
   const imageData = this.context.getImageData(0, 0, this.state.canvasSize, this.state.canvasSize);
   const { width } = imageData;
