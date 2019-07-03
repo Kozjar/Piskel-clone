@@ -7,7 +7,7 @@ import Colors from './Colors';
 export default class RightSideTools extends Component {
   render() {
     return (
-      <div>
+      <div className='right-side-tools'>
         <AnimPreview/>
         <Layers/>
         <Colors/>
