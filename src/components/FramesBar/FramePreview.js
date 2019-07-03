@@ -61,11 +61,16 @@ export default class FramePreview extends Component {
 
   moveDrag(e) {
     if (this.onDrag) {
+      let frameNum;
       this.draggedElem = document.getElementById(this.elemId);
       this.draggedElem.style.top = `${e.pageY - this.shift.y}px`;
       this.draggedElem.style.zIndex = '-100';
-      const elem = document.elementFromPoint(220, e.clientY);
-      let frameNum = elem.getAttribute('frame-preview-number');
+      const elem = document.elementFromPoint(180, e.clientY);
+      if (elem.classList.contains('frames-bar__frame-preview')) {
+        frameNum = elem.getAttribute('frame-preview-number');
+      } else {
+        frameNum = elem.parentElement.getAttribute('frame-preview-number');
+      }
       if (frameNum !== null) {
         frameNum = Number(frameNum);
         if (frameNum === this.props.proxyFrame) this.props.setProxyFrame(frameNum - 1);
