@@ -1,3 +1,4 @@
+
 function compareDataColors(data, point, color) {
   if (data[point + 0] === color.r
     && data[point + 1] === color.g
@@ -6,6 +7,9 @@ function compareDataColors(data, point, color) {
 }
 
 function mouseDown(e) {
+  jQuery(document).ready(function ($) {
+    $('body').css('background-color', 'red');
+  })
   this.context = this.canvas.getContext('2d');
   const imageData = this.context.getImageData(0, 0, this.state.canvasSize, this.state.canvasSize);
   const { width } = imageData;

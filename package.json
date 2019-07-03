@@ -49,8 +49,11 @@
     "webpack-dev-server": "^3.5.1"
   },
   "dependencies": {
+    "jquery": "^3.4.1",
+    "popper.js": "^1.15.0",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "spectrum-colorpicker": "^1.8.0"
   },
   "babel": {
     "presets": [

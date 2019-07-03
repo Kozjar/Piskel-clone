@@ -103,6 +103,8 @@ export default class Main extends Component {
           activeToolId={this.state.activeToolId}
           mainColor={this.state.mainColor}
           semiColor={this.state.semiColor}
+          setMainColor={this.setMainColor.bind(this)}
+          setSemiColor={this.setSemiColor.bind(this)}
           swapColors={this.swapColors.bind(this)}/>
         <FramesBar onSetActiveFrame={this.setActiveFrame}
           activeFrame={this.state.activeFrame}
