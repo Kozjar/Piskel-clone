@@ -13,8 +13,8 @@
     border-color: $specialColor;
   }
   .proxy-frame {
-    width: 108.3px;
-    height: 108.4px;
+    width: 110px;
+    height: 110px;
     border: 4px dashed $borderColor;
     margin-top: 20px;
     margin-left: 31px;
@@ -24,15 +24,19 @@
     image-rendering: pixelated;
     display: flex;
     justify-content: space-between;
-    width: 108.3px;
-    height: 108.4px;
+    width: 110px;
+    height: 110px;
     border: 4px solid $borderColor;
     margin: 0 auto;
     margin-top: 20px;
     canvas {
       background-color: white;
+      position: absolute;
+      background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAABlBMVEVMTExVVVUnhsEkAAAAHUlEQVR4AWOAAUYoQOePEAUj3v9oYDQ9gMBoegAAJFwCAbLaTIMAAAAASUVORK5CYII=') repeat;
     }
     &-num {
+      position: relative;
+      z-index: 10;
       width: 30px;
       height: 30px;
       background-color: coral;
@@ -42,6 +46,8 @@
       font-weight: bold;
     }
     &-delete-btn {
+      position: relative;
+      z-index: 10;
       width: 30px;
       height: 30px;
       cursor: pointer;
