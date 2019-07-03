@@ -25,6 +25,7 @@ export default class Main extends Component {
       frames: [], // All frames info
       activeFrame: undefined, // current actve frame
       proxyFrame: undefined, // Element under which we want to draw frame skeleton
+      canvasSize: 32,
 
       mouseUpContainer: () => { },
       mouseMoveContainer: () => { },
@@ -36,11 +37,12 @@ export default class Main extends Component {
     };
 
     this.setActiveFrame = frameManager.setActiveFrame.bind(this);
-    this.addNewFrame = frameManager.addNewFrame.bind(this);
+    this.addNewFrame = frameManager.addNewFrame.bind(this, undefined);
     this.deleteFrame = frameManager.deleteFrame.bind(this);
     this.updateFramePreview = frameManager.updateFramePreview.bind(this);
     this.setProxyFrame = frameManager.setProxyFrame.bind(this);
     this.changeFramePos = frameManager.changeFramePos.bind(this);
+    this.dublicateFrame = frameManager.dublicateFrame.bind(this);
     this.setActiveTool = this.setActiveTool.bind(this);
   }
 
@@ -112,8 +114,10 @@ export default class Main extends Component {
           frames={this.state.frames}
           onAddNewFrame={this.addNewFrame}
           onDeleteFrame={this.deleteFrame}
+          onDublicateFrame={this.dublicateFrame}
           setProxyFrame={this.setProxyFrame}
-          changeFramePos={this.changeFramePos} />
+          changeFramePos={this.changeFramePos}
+          canvasSize={this.state.canvasSize}/>
         <Workspace />
         <Canvas onUpdateFramePreview={this.updateFramePreview}
           onMouseDown={this.state.mouseDownContainer}
@@ -122,7 +126,8 @@ export default class Main extends Component {
           mainColor={this.state.mainColor}
           semiColor={this.state.semiColor}
           setMainColor={this.setMainColor.bind(this)}
-          setSemiColor={this.setSemiColor.bind(this)}/>
+          setSemiColor={this.setSemiColor.bind(this)}
+          canvasSize={this.state.canvasSize}/>
         <RightSideTools />
       </main>
     );

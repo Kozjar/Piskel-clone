@@ -1,28 +1,25 @@
-function addNewFrame() {
+function addNewFrame(img) {
   this.setState((state, props) => ({
     frames: [...state.frames, { // add new element to frames array
       number: state.frames.length,
       id: state.frames.length,
-      img: undefined,
+      img,
     }], //  makes active the last frame
   }), () => { this.setActiveFrame(this.state.frames.length - 1); });
 }
 
 function setActiveFrame(num) {
-  console.log(num);
   this.setState({
     activeFrame: num,
   }, () => {
     const canvas = document.getElementById('main-canvas');
     const context = canvas.getContext('2d');
+    const { img } = this.state.frames[this.state.activeFrame];
 
     context.clearRect(0, 0, canvas.width, canvas.height); //  clear cnavas
     //  if active frame has image, draw this image on main canvas
-    console.log(this.state.activeFrame);
-    if (this.state.frames[this.state.activeFrame].img) {
-      const img = new Image();
-      img.src = this.state.frames[this.state.activeFrame].img;
-      context.drawImage(img, 0, 0);
+    if (img !== undefined) {
+      context.putImageData(img, 0, 0);
     }
   });
 }
@@ -61,11 +58,21 @@ function deleteFrame(num) {
   }
 }
 
+function dublicateFrame(img, num) {
+  const { frames } = this.state;
+  frames.splice(num + 1, 0, { number: num + 1, id: num + 1, img });
+  for (let i = num + 2; i < frames.length; i += 1) {
+    frames[i].number += 1;
+    frames[i].id += 1;
+  }
+  this.setState({ frames });
+}
+
 function updateFramePreview(w, h) {
   // const ctx = document.getElementById('drawing-canvas').getContext('2d').getImageData(0, 0, w, h);
-  const canvasMain = document.getElementById('main-canvas');
+  const mainCanvasCtx = document.getElementById('main-canvas').getContext('2d');
+  const img = mainCanvasCtx.getImageData(0, 0, w, h);
   // canvasMain.getContext('2d').putImageData(ctx, 0, 0);
-  const img = canvasMain.toDataURL();
   const framesTmp = this.state.frames;
   //  set active frame image to main canvas image
   framesTmp[this.state.activeFrame].img = img;
@@ -87,5 +94,5 @@ function changeFramePos(from, to) {
 }
 
 export {
-  addNewFrame, setActiveFrame, deleteFrame, updateFramePreview, setProxyFrame, changeFramePos,
+  addNewFrame, setActiveFrame, deleteFrame, updateFramePreview, setProxyFrame, changeFramePos, dublicateFrame,
 };

@@ -7,8 +7,7 @@ export default class Canvas extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      canvasSize: 32,
-      scale: 10,
+      scale: 15,
       startDrawingContainer: undefined,
       mouseMoveContainer: undefined,
       endDrawingContainer: undefined,
@@ -21,7 +20,7 @@ export default class Canvas extends Component {
     this.context = undefined; // any canvas contxet
     this.draw = false; // Shows whether the current tool draws
     this.WORKSPACE_WIDTH = 940;
-    this.containerSize = this.state.canvasSize * this.state.scale;
+    this.containerSize = this.props.canvasSize * this.state.scale;
 
     // Active color
     this.Alpha = 255;
@@ -50,8 +49,8 @@ export default class Canvas extends Component {
   }
 
   setScale(n) {
-    if (n < 1 || (n * this.state.canvasSize) > 1500) return;
-    this.containerSize = this.state.canvasSize * n;
+    if (n < 1 || (n * this.props.canvasSize) > 1500) return;
+    this.containerSize = this.props.canvasSize * n;
     this.setState({ scale: n });
   }
 
@@ -122,8 +121,8 @@ export default class Canvas extends Component {
       <div style={{ width: `${this.WORKSPACE_WIDTH}px` }} className='workspace' onWheel={this.onWheel.bind(this)}>
         <div style={backgroundStyle} id="main-canvas-container">
           <div style={backgroundStyle} className='canvas-background'></div>
-          <canvas style={canvasStyle} className="canvas" id="main-canvas" width={this.state.canvasSize} height={this.state.canvasSize}></canvas>
-          <canvas style={canvasStyle} className="canvas" id="drawing-canvas" width={this.state.canvasSize} height={this.state.canvasSize}
+          <canvas style={canvasStyle} className="canvas" id="main-canvas" width={this.props.canvasSize} height={this.props.canvasSize}></canvas>
+          <canvas style={canvasStyle} className="canvas" id="drawing-canvas" width={this.props.canvasSize} height={this.props.canvasSize}
             onMouseDown={this.onMouseDown.bind(this)}
             onMouseLeave={() => this.setState({ showMousePos: false })}
             onMouseEnter={() => this.setState({ showMousePos: true })} >
