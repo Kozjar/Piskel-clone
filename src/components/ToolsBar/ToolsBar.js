@@ -27,13 +27,11 @@ export default class ToolsBar extends Component {
   changeMainColor() {
     const color = hexToRgb(this.main.value);
     this.props.setMainColor(color.r, color.g, color.b);
-
   }
 
   changeSemiColor() {
     const color = hexToRgb(this.semi.value);
     this.props.setSemiColor(color.r, color.g, color.b);
-
   }
 
   swapColors() {

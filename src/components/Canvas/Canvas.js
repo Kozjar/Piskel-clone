@@ -35,7 +35,6 @@ export default class Canvas extends Component {
 
     document.body.addEventListener('mousemove', this.onMouseMove.bind(this));
     document.body.addEventListener('mouseup', this.onMouseUp.bind(this));
-    console.log('palette');
   }
 
   setMousePos(x, y, func) {
