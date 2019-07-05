@@ -9,7 +9,7 @@ export default class RightSideTools extends Component {
     return (
       <div className='right-side-tools'>
         <AnimPreview/>
-        <Layers/>
+        <Layers layers={this.props.layers}/>
         <Colors/>
       </div>
     );

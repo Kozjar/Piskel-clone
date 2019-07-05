@@ -2,10 +2,10 @@
     flex-shrink: 0;
     height: 100vh;
     width: 280px;
-    background-color: $bgCologBlock;
+    background-color: $bgColorBlock;
     margin-left: 10px;
     color: white;
-    font-size: 1.3em;
+    font-size: 1.25em;
     text-align: center;
 
     display: flex;
@@ -25,12 +25,37 @@
         background-color: $bgColorSemi;
         border: 4px solid $borderColor;
     }
-    .layers-container {
+    .layers-wrapper {
         height: 180px;
         width: 180px;
-        background-color: $bgColorSemi;
+        background-color: $bgColorMain;
         border: 4px solid $borderColor;
         margin-top: 40px;
+        .layers-title {
+            box-sizing: border-box;
+            line-height: 35px;
+            padding-left: 7px;
+            text-align: start;
+            height: 35px;
+            width: 100%;
+            background-color: $bgColorMain;
+        }
+        .layers-tools {
+            display: flex;
+            height: 30px;
+            width: 100%;
+            background-color: $bgColorLighter;
+            border-top: 1px solid $borderColor;
+            border-bottom: 1px solid $borderColor;
+            &__add-new-layer-btn {
+                // border: 0px;
+                border-top: 0;
+                border-left: 0;
+                border-right: 1px solid $borderColor;
+                background-color: $bgColorSemi;
+                width: 30px;
+            }
+        }
     }
     .colors-container {
         height: 180px;

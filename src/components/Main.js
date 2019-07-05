@@ -17,12 +17,14 @@ import * as bucketTool from '../Tools/bucketTool';
 
 // Managers import
 import * as frameManager from '../managers/FramesManager';
+import LayersManager from '../managers/LayersManager';
 
 export default class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
       frames: [], // All frames info
+      layers: [],
       activeFrame: undefined, // current actve frame
       proxyFrame: undefined, // Element under which we want to draw frame skeleton
       canvasSize: 32,
@@ -35,6 +37,8 @@ export default class Main extends Component {
       mainColor: { r: 230, g: 140, b: 50 },
       semiColor: { r: 175, g: 60, b: 93 },
     };
+
+    this.layersManager = new LayersManager();
 
     this.setActiveFrame = frameManager.setActiveFrame.bind(this);
     this.addNewFrame = frameManager.addNewFrame.bind(this, undefined);
@@ -49,6 +53,7 @@ export default class Main extends Component {
   componentDidMount() {
     this.addNewFrame(); // Add new frame after component was rendered
     this.setActiveTool(0); // Set active tool to pen tool
+    this.layersManager.addNewLayer.bind(this)();
   }
 
   setTool(tool) {
@@ -126,7 +131,7 @@ export default class Main extends Component {
           setMainColor={this.setMainColor.bind(this)}
           setSemiColor={this.setSemiColor.bind(this)}
           canvasSize={this.state.canvasSize}/>
-        <RightSideTools />
+        <RightSideTools layers={this.state.layers}/>
       </main>
     );
   }
