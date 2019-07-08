@@ -93,7 +93,7 @@ export default class Main extends Component {
   }
 
   setActiveLayer(n) {
-    this.setState({ activeLayer: n });
+    this.setState({ activeLayer: n }, this.setActiveFrame(this.state.activeFrame));
   }
 
   setMainColor(r, g, b) {
@@ -118,6 +118,7 @@ export default class Main extends Component {
           swapColors={this.swapColors.bind(this)}/>
         <FramesBar onSetActiveFrame={this.setActiveFrame}
           activeFrame={this.state.activeFrame}
+          activeLayer={this.state.activeLayer}
           proxyFrame={this.state.proxyFrame}
           frames={this.state.frames}
           onAddNewFrame={this.addNewFrame}
@@ -133,6 +134,7 @@ export default class Main extends Component {
           onMouseUp={this.state.mouseUpContainer}
           mainColor={this.state.mainColor}
           semiColor={this.state.semiColor}
+          activeLayer={this.state.activeLayer}
           setMainColor={this.setMainColor.bind(this)}
           setSemiColor={this.setSemiColor.bind(this)}
           canvasSize={this.state.canvasSize}/>

@@ -14,7 +14,6 @@ function getValidLayerName(layers) {
 export default class LayersManager {
   addNewLayer() {
     const { layers } = this.state;
-
     const layerName = getValidLayerName(layers);
     layers.push({ name: layerName });
 

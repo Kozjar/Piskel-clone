@@ -34,7 +34,7 @@ export default class Layers extends Component {
 
   render() {
     return (
-      <div className={`concrete-layer ${this.props.isActive ? 'active-layer' : ''}`} 
+      <div className={`concrete-layer ${this.props.isActive ? 'active-layer' : ''}`}
         onClick={this.props.setActiveLayer.bind(this, this.props.layerId)}>
         {this.props.editMode ? (
           <form onSubmit={this.handleSetNewName.bind(this)}>

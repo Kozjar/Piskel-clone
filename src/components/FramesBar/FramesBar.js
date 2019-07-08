@@ -10,7 +10,7 @@ export default class FramesBar extends Component {
         {this.props.frames.map(frame => <FramePreview key={frame.id}
           number={frame.number}
           onDeleteFrame={this.props.onDeleteFrame.bind(this)}
-          img={frame.img}
+          img={frame.img[this.props.activeLayer]}
           proxyFrame={this.props.proxyFrame}
           isActive={frame.number === this.props.activeFrame}
           onSetActiveFrame={this.props.onSetActiveFrame.bind(this)}
