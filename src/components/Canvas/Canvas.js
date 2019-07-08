@@ -23,6 +23,9 @@ export default class Canvas extends Component {
     this.containerSize = this.props.canvasSize * this.state.scale;
 
     // Active color
+    this.R = 115;
+    this.G = 81;
+    this.B = 163;
     this.Alpha = 255;
   }
 
@@ -32,7 +35,6 @@ export default class Canvas extends Component {
 
     document.body.addEventListener('mousemove', this.onMouseMove.bind(this));
     document.body.addEventListener('mouseup', this.onMouseUp.bind(this));
-    console.log('palette');
   }
 
   setMousePos(x, y, func) {
