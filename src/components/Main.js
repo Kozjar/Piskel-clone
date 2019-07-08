@@ -26,6 +26,7 @@ export default class Main extends Component {
       frames: [], // All frames info
       layers: [],
       activeFrame: undefined, // current actve frame
+      activeLayer: 0,
       proxyFrame: undefined, // Element under which we want to draw frame skeleton
       canvasSize: 32,
 
@@ -91,6 +92,10 @@ export default class Main extends Component {
     this.setState({ activeToolId: toolId });
   }
 
+  setActiveLayer(n) {
+    this.setState({ activeLayer: n });
+  }
+
   setMainColor(r, g, b) {
     this.setState({ mainColor: { r, g, b } });
   }
@@ -131,7 +136,12 @@ export default class Main extends Component {
           setMainColor={this.setMainColor.bind(this)}
           setSemiColor={this.setSemiColor.bind(this)}
           canvasSize={this.state.canvasSize}/>
-        <RightSideTools layers={this.state.layers}/>
+        <RightSideTools layers={this.state.layers}
+          activeLayer={this.state.activeLayer}
+          addNewLayer={this.layersManager.addNewLayer.bind(this)}
+          deleteLayer={this.layersManager.deleteLayer.bind(this)}
+          setActiveLayer={this.setActiveLayer.bind(this)}
+          setNewLayerName={this.layersManager.setNewName.bind(this)}/>
       </main>
     );
   }

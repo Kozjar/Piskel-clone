@@ -26,11 +26,52 @@
         border: 4px solid $borderColor;
     }
     .layers-wrapper {
-        height: 180px;
         width: 180px;
         background-color: $bgColorMain;
         border: 4px solid $borderColor;
         margin-top: 40px;
+        .concrete-layer {
+            height: 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid $borderColor;
+            &:hover {
+                background-color: $bgColorLighter;
+                cursor: pointer;
+            }
+            button {
+                height: 100%;
+            }
+            .layer-name {
+                padding: 5px;
+                line-height: 28px;
+                font-size: 0.8em;
+            }
+            form {
+                padding: 0;
+                flex-grow: 1;
+                height: 100%;
+                input {
+                    box-sizing: border-box;
+                    width: 100%;
+                    border-radius: 5px;
+                    border-color: $specialColor;
+                    padding: 4px;
+                    margin: 0;
+                    &:focus {
+                        outline: none;
+                    }
+                }
+            }
+        }
+        .active-layer {
+            background-color: $bgColorSemi;
+            &:hover {
+                background-color: $bgColorSemi;
+                cursor: pointer;
+            }
+        }
         .layers-title {
             box-sizing: border-box;
             line-height: 35px;
