@@ -123,6 +123,8 @@ export default class Canvas extends Component {
       <div style={{ width: `${this.WORKSPACE_WIDTH}px` }} className='workspace' onWheel={this.onWheel.bind(this)}>
         <div style={backgroundStyle} id="main-canvas-container">
           <div style={backgroundStyle} className='canvas-background'></div>
+          <canvas style={canvasStyle} className="canvas" id="canvas-layers-below" width={this.props.canvasSize} height={this.props.canvasSize}></canvas>
+          <canvas style={canvasStyle} className="canvas" id="canvas-layers-above" width={this.props.canvasSize} height={this.props.canvasSize}></canvas>
           <canvas style={canvasStyle} className="canvas" id="main-canvas" width={this.props.canvasSize} height={this.props.canvasSize}></canvas>
           <canvas style={canvasStyle} className="canvas" id="drawing-canvas" width={this.props.canvasSize} height={this.props.canvasSize}
             onMouseDown={this.onMouseDown.bind(this)}

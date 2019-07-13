@@ -1,6 +1,6 @@
-function addNewFrame(img) {
+function addNewFrame(fn) {
   const imgArr = new Array(this.state.layers.length);
-  if (img !== undefined) imgArr[this.state.activeLayer] = img;
+  // if (img !== undefined) imgArr[this.state.activeLayer] = img;
   this.setState((state, props) => ({
     frames: [...state.frames, { // add new element to frames array
       number: state.frames.length,
@@ -16,7 +16,6 @@ function setActiveFrame(num) {
   }, () => {
     const canvas = document.getElementById('main-canvas');
     const context = canvas.getContext('2d');
-    console.log(this.state.frames);
     const img = this.state.frames[this.state.activeFrame].img[this.state.activeLayer];
 
     context.clearRect(0, 0, canvas.width, canvas.height); //  clear cnavas
@@ -72,14 +71,11 @@ function dublicateFrame(img, num) {
 }
 
 function updateFramePreview(w, h) {
-  // const ctx = document.getElementById('drawing-canvas').getContext('2d').getImageData(0, 0, w, h);
   const mainCanvasCtx = document.getElementById('main-canvas').getContext('2d');
   const img = mainCanvasCtx.getImageData(0, 0, w, h);
-  // canvasMain.getContext('2d').putImageData(ctx, 0, 0);
   const framesTmp = this.state.frames;
   //  set active frame image to main canvas image
   framesTmp[this.state.activeFrame].img[this.state.activeLayer] = img;
-  console.log(framesTmp);
   this.setState({
     frames: framesTmp,
   });

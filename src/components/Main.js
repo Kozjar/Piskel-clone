@@ -23,9 +23,9 @@ export default class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      frames: [], // All frames info
+      frames: [{ number: 0, id: 0, img: [] }], // All frames info
       layers: [],
-      activeFrame: undefined, // current actve frame
+      activeFrame: 0, // current actve frame
       activeLayer: 0,
       proxyFrame: undefined, // Element under which we want to draw frame skeleton
       canvasSize: 32,
@@ -52,7 +52,6 @@ export default class Main extends Component {
   }
 
   componentDidMount() {
-    this.addNewFrame(); // Add new frame after component was rendered
     this.setActiveTool(0); // Set active tool to pen tool
     this.layersManager.addNewLayer.bind(this)();
   }
@@ -90,10 +89,6 @@ export default class Main extends Component {
         break;
     }
     this.setState({ activeToolId: toolId });
-  }
-
-  setActiveLayer(n) {
-    this.setState({ activeLayer: n }, this.setActiveFrame(this.state.activeFrame));
   }
 
   setMainColor(r, g, b) {
@@ -142,7 +137,7 @@ export default class Main extends Component {
           activeLayer={this.state.activeLayer}
           addNewLayer={this.layersManager.addNewLayer.bind(this)}
           deleteLayer={this.layersManager.deleteLayer.bind(this)}
-          setActiveLayer={this.setActiveLayer.bind(this)}
+          setActiveLayer={this.layersManager.setActiveLayer.bind(this)}
           setNewLayerName={this.layersManager.setNewName.bind(this)}/>
       </main>
     );
