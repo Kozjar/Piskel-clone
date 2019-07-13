@@ -1,6 +1,6 @@
 # Piskel clone
 
-## [Visit on gh-pages](https://kozjar.github.io/Gachi_Rep/)
+## [Visit on gh-pages](https://kozjar.github.io/Piskel-clone/)
 
 ## About piskel clone 
 Piskel clone it is clone of original site  [piskelapp.com](https://www.piskelapp.com/). And piskel clone used for non-profit purposes.
