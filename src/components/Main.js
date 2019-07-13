@@ -17,13 +17,16 @@ import * as bucketTool from '../Tools/bucketTool';
 
 // Managers import
 import * as frameManager from '../managers/FramesManager';
+import LayersManager from '../managers/LayersManager';
 
 export default class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      frames: [], // All frames info
-      activeFrame: undefined, // current actve frame
+      frames: [{ number: 0, id: 0, img: [] }], // All frames info
+      layers: [],
+      activeFrame: 0, // current actve frame
+      activeLayer: 0,
       proxyFrame: undefined, // Element under which we want to draw frame skeleton
       canvasSize: 32,
 
@@ -36,6 +39,8 @@ export default class Main extends Component {
       semiColor: { r: 175, g: 60, b: 93 },
     };
 
+    this.layersManager = new LayersManager();
+
     this.setActiveFrame = frameManager.setActiveFrame.bind(this);
     this.addNewFrame = frameManager.addNewFrame.bind(this, undefined);
     this.deleteFrame = frameManager.deleteFrame.bind(this);
@@ -47,8 +52,8 @@ export default class Main extends Component {
   }
 
   componentDidMount() {
-    this.addNewFrame(); // Add new frame after component was rendered
     this.setActiveTool(0); // Set active tool to pen tool
+    this.layersManager.addNewLayer.bind(this)();
   }
 
   setTool(tool) {
@@ -110,6 +115,7 @@ export default class Main extends Component {
           swapColors={this.swapColors.bind(this)}/>
         <FramesBar onSetActiveFrame={this.setActiveFrame}
           activeFrame={this.state.activeFrame}
+          activeLayer={this.state.activeLayer}
           proxyFrame={this.state.proxyFrame}
           frames={this.state.frames}
           onAddNewFrame={this.addNewFrame}
@@ -125,10 +131,16 @@ export default class Main extends Component {
           onMouseUp={this.state.mouseUpContainer}
           mainColor={this.state.mainColor}
           semiColor={this.state.semiColor}
+          activeLayer={this.state.activeLayer}
           setMainColor={this.setMainColor.bind(this)}
           setSemiColor={this.setSemiColor.bind(this)}
           canvasSize={this.state.canvasSize}/>
-        <RightSideTools />
+        <RightSideTools layers={this.state.layers}
+          activeLayer={this.state.activeLayer}
+          addNewLayer={this.layersManager.addNewLayer.bind(this)}
+          deleteLayer={this.layersManager.deleteLayer.bind(this)}
+          setActiveLayer={this.layersManager.setActiveLayer.bind(this)}
+          setNewLayerName={this.layersManager.setNewName.bind(this)}/>
       </main>
     );
   }

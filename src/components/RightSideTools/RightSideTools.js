@@ -9,7 +9,12 @@ export default class RightSideTools extends Component {
     return (
       <div className='right-side-tools'>
         <AnimPreview/>
-        <Layers/>
+        <Layers layers={this.props.layers}
+          activeLayer={this.props.activeLayer}
+          addNewLayer={this.props.addNewLayer.bind(this)}
+          deleteLayer={this.props.deleteLayer.bind(this)}
+          setActiveLayer={this.props.setActiveLayer.bind(this)}
+          setNewLayerName={this.props.setNewLayerName.bind(this)}/>
         <Colors/>
       </div>
     );
