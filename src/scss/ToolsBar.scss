@@ -52,6 +52,16 @@
                 background-image: url(../Assets/icons/swap_colors_active.png);
             }
         }
+        input[type="color"] {
+            -webkit-appearance: none;
+            padding: 0px; /* Remove space around color picker in Chrome */
+        }
+        input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+        input[type="color"]::-webkit-color-swatch {
+            border: none;
+        }
     }
     .activeTool {
         border: 3px solid $specialColor;
