@@ -1,4 +1,5 @@
 .right-side-tools {
+    position: relative;
     flex-shrink: 0;
     height: 100vh;
     width: 280px;
@@ -27,8 +28,9 @@
     .frame-rate {
         width: 120px;
         height: 30px;
-        margin-top: 10px;
-        margin-left: 20px;
+        top: 34%;
+        right: 20%;
+        position: absolute;
     }
     .layers-wrapper {
         width: 180px;
