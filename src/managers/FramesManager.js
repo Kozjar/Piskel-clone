@@ -54,7 +54,7 @@ function deleteFrame(num) {
     });
   } else {
     const { frames } = this.state;
-    frames[0].img = undefined;
+    frames[0].img = [];
     this.setState({ frames });
     this.setActiveFrame(0);
   }

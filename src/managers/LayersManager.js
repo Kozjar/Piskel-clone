@@ -44,7 +44,7 @@ export default class LayersManager {
     let newActiveLayer = id;
     const { layers } = this.state;
     const { frames } = this.state;
-    layers.splice(id, 1);
+    if (layers.length > 1) layers.splice(id, 1);
     frames.forEach((frame) => {
       frame.img.splice(id, 1);
     });
